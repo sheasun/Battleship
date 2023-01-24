@@ -28,7 +28,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'edu.duke.ac692.battleship.App'
+    mainClass = 'edu.duke.ss1316.battleship.App'
 }
 
 tasks.named('test') {
