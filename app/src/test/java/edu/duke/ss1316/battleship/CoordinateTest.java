@@ -45,7 +45,17 @@ public class CoordinateTest {
       Coordinate c4 = new Coordinate("Z0");
       assertEquals(25, c4.getRow());
       assertEquals(0, c4.getColumn());
-  
     }
-  
+
+    @Test
+    public void test_string_constructor_error_cases() {
+      assertThrows(IllegalArgumentException.class, () -> new Coordinate("00"));
+      assertThrows(IllegalArgumentException.class, () -> new Coordinate("AA"));
+      assertThrows(IllegalArgumentException.class, () -> new Coordinate("@0"));
+      assertThrows(IllegalArgumentException.class, () -> new Coordinate("[0"));
+      assertThrows(IllegalArgumentException.class, () -> new Coordinate("A/"));
+      assertThrows(IllegalArgumentException.class, () -> new Coordinate("A:"));
+      assertThrows(IllegalArgumentException.class, () -> new Coordinate("A"));
+      assertThrows(IllegalArgumentException.class, () -> new Coordinate("A12"));
+    }
 }
