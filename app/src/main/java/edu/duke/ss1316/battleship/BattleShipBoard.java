@@ -1,6 +1,6 @@
 package edu.duke.ss1316.battleship;
 
-public class BattleShipBoard {
+public class BattleShipBoard implements Board {
     private final int width;
     public int getWidth() {
         return width;
