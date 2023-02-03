@@ -12,14 +12,14 @@ public class BoardTextView {
     /**
      * The Board to display
      */
-    private final Board toDisplay;
+    private final Board<Character> toDisplay;
  /**
    * Constructs a BoardView, given the board it will display.
    * 
    * @param toDisplay is the Board to display
    * @throws IllegalArgumentException if the board is larger than 10x26.  
    */
-  public BoardTextView(Board toDisplay) {
+  public BoardTextView(Board<Character> toDisplay) {
     this.toDisplay = toDisplay;
     if (toDisplay.getWidth() > 10 || toDisplay.getHeight() > 26) {
       throw new IllegalArgumentException(
@@ -30,8 +30,8 @@ public class BoardTextView {
     public String displayMyOwnBoard() {
         StringBuilder sb = new StringBuilder();
         sb.append(makeHeader());
-        for (int i = 0; i < toDisplay.getHeight(); ++i) {
-            char c = (char)(i + 'A');
+        for (int row = 0; row < toDisplay.getHeight(); ++row) {
+            char c = (char)(row + 'A');
             String s = c + "  |  " + c;
             sb.append(s);
             sb.append("\n");
@@ -48,9 +48,9 @@ public class BoardTextView {
   public String makeHeader() {
     StringBuilder ans = new StringBuilder("  "); // README shows two spaces at
     String sep = ""; //start with nothing to separate, then switch to | to separate
-    for (int i = 0; i < toDisplay.getWidth(); i++) {
+    for (int column = 0; column < toDisplay.getWidth(); column++) {
       ans.append(sep);
-      ans.append(i);
+      ans.append(column);
       sep = "|";
     }
     ans.append("\n");

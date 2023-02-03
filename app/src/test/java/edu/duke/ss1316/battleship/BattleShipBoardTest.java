@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class BattleShipBoardTest {
   @Test
   public void test_width_and_height() {
-    Board b1 = new BattleShipBoard(10, 20);
+    Board<Character> b1 = new BattleShipBoard<Character>(10, 20);
     assertEquals(10, b1.getWidth());
     assertEquals(20, b1.getHeight());
   }
