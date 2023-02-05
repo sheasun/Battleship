@@ -62,4 +62,8 @@ public abstract class BasicShip<T> implements Ship<T> {
             throw new IllegalArgumentException("This coordinate is not in this ship!");
         }
     }
+
+    public Iterable<Coordinate> getCoordinates() {
+        return this.myPieces.keySet();
+    }
 }

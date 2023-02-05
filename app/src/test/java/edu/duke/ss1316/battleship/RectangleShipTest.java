@@ -22,7 +22,7 @@ class RectangleShipTest {
     @Test
     public void test_recordHitAt_and_wasHitAt() {
         Coordinate where = new Coordinate(2, 3);
-        RectangleShip<Character> rs = new RectangleShip<>(where, 3, 2, 's', '*');
+        RectangleShip<Character> rs = new RectangleShip<>("submarine", where, 3, 2, 's', '*');
         for (int r = 2; r < 2 + 2; ++r) {
             for (int c = 3; c < 3 + 3; ++c) {
                 assertEquals(false, rs.wasHitAt(new Coordinate(r, c)));
@@ -44,7 +44,7 @@ class RectangleShipTest {
     @Test
     public void test_isSunk() {
         Coordinate where = new Coordinate(2, 3);
-        RectangleShip<Character> rs = new RectangleShip<>(where, 3, 2, 's', '*');
+        RectangleShip<Character> rs = new RectangleShip<>("submarine", where, 3, 2, 's', '*');
         assertEquals(false, rs.isSunk());
         for (int r = 2; r < 2 + 2; ++r) {
             for (int c = 3; c < 3 + 3; ++c) {
@@ -57,7 +57,7 @@ class RectangleShipTest {
     @Test
     public void test_getDisplayInfoAt() {
         Coordinate where = new Coordinate(2, 3);
-        RectangleShip<Character> rs = new RectangleShip<>(where, 3, 2, 's', '*');
+        RectangleShip<Character> rs = new RectangleShip<>("submarine", where, 3, 2, 's', '*');
         rs.recordHitAt(new Coordinate(3, 3));
         for (int r = 2; r < 2 + 2; ++r) {
             for (int c = 3; c < 3 + 3; ++c) {
@@ -67,6 +67,17 @@ class RectangleShipTest {
                     assertEquals('s', rs.getDisplayInfoAt(new Coordinate(r, c)));
                 }
             }
+        }
+    }
+
+
+    @Test
+    public void test_getCoordinates() {
+        Coordinate c = new Coordinate(2, 3);
+        RectangleShip<Character> rs = new RectangleShip<Character>("Submarine", c, 3, 2, 's', '*');
+        Iterable<Coordinate> myPieces = rs.getCoordinates();
+        for (Coordinate m : myPieces) {
+            assertEquals('s', rs.getDisplayInfoAt(m));
         }
     }
 }

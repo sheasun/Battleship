@@ -12,6 +12,8 @@ public class App {
     private final BufferedReader inputReader;
     private final PrintStream out;
 
+    private final AbstractShipFactory<Character> shipFactory;
+
     // public String getGreeting() {
     //     return "Hello World!";
     // }
@@ -20,6 +22,7 @@ public class App {
         this.view = new BoardTextView(theBoard);
         this.inputReader = new BufferedReader(inputSource);
         this.out = out;
+        this.shipFactory = new V1ShipFactory();
     }
 
     public Placement readPlacement(String prompt) throws IOException {
