@@ -43,6 +43,7 @@ public class BoardTextViewTest {
       "E  | |  E\n"+
       expectedHeader;
     assertEquals(expected, view.displayMyOwnBoard());
+    assertEquals(3, view.getBoard().getWidth());
   }
 
   @Test

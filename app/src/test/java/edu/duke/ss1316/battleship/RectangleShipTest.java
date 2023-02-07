@@ -3,6 +3,8 @@ package edu.duke.ss1316.battleship;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 class RectangleShipTest {
     @Test
     public void test_constructer() {
@@ -75,5 +77,19 @@ class RectangleShipTest {
         for (Coordinate m : myPieces) {
             assertEquals('s', rs.getDisplayInfoAt(m, true));
         }
+    }
+
+    @Test
+    public void test_getShips() {
+        Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
+        V1ShipFactory factory = new V1ShipFactory();
+        Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
+        Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(5, 6), 'v'));
+        board.tryAddShip(ship1);
+        board.tryAddShip(ship2);
+        ArrayList<Ship<Character>> ships = new ArrayList<>();
+        ships.add(ship1);
+        ships.add(ship2);
+        assertEquals(ships, board.getShips());
     }
 }

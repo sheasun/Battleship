@@ -36,6 +36,9 @@ public class BoardTextView {
     return displayAnyBoard((c)->toDisplay.whatIsAtForEnemy(c));
   }
 
+  public Board<Character> getBoard() {
+    return this.toDisplay;
+  }
 
     protected String displayAnyBoard(Function<Coordinate, Character> getSquareFn) {
         StringBuilder sb = new StringBuilder();
@@ -82,7 +85,7 @@ public class BoardTextView {
 
   public String displayMyBoardWithEnemyNextToIt(BoardTextView enemyView, String myHeader, String enemyHeader) {
     String[] myLines = displayMyOwnBoard().split("\n");
-    String[] enemyLines = displayEnemyBoard().split("\n");
+    String[] enemyLines = enemyView.displayEnemyBoard().split("\n");
 
     int len = myLines.length;
 
@@ -95,6 +98,8 @@ public class BoardTextView {
     sb.append(makeBoundHelper(myLines[len - 1], enemyLines[len - 1]));
     return sb.toString();
   }
+
+  // boards' header, e.g. "Your ocean"  "Player B's ocean"
   public String makeHeaderHelper(String myHeader, String enemyHeader) {
     StringBuilder sb = new StringBuilder();
     sb.append(makeSpaceHelper(5));
@@ -105,6 +110,7 @@ public class BoardTextView {
     sb.append("\n");
     return sb.toString();
   }
+
   public String makeBoundHelper(String myLine, String enemyLine) {
     StringBuilder sb = new StringBuilder();
     sb.append(myLine);
@@ -113,6 +119,8 @@ public class BoardTextView {
     sb.append("\n");
     return sb.toString();
   }
+
+  // add needed number of space
   public String makeSpaceHelper(int num) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < num; ++i) {

@@ -1,6 +1,8 @@
 package edu.duke.ss1316.battleship;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class BattleShipBoardTest {
@@ -13,10 +15,10 @@ public class BattleShipBoardTest {
 
   @Test
   public void test_invalid_dimensions() {
-    assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard(10, 0, 'X'));
-    assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard(0, 20, 'X'));
-    assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard(10, -5, 'X'));
-    assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard(-8, 20, 'X'));
+    assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard<Character>(10, 0, 'X'));
+    assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard<Character>(0, 20, 'X'));
+    assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard<Character>(10, -5, 'X'));
+    assertThrows(IllegalArgumentException.class, () -> new BattleShipBoard<Character>(-8, 20, 'X'));
   }
 
   @Test
@@ -54,8 +56,8 @@ public class BattleShipBoardTest {
     board.tryAddShip(ship2);
     board.fireAt(new Coordinate(3, 3));
     assertEquals('X', board.whatIsAtForEnemy(new Coordinate(3, 3)));
-
   }
+
   @Test
   public void test_fireAt() {
     Board<Character> board = new BattleShipBoard<Character>(10, 20, new InBoundRuleChecker<>(new NoCollisionRuleChecker<>(null)), 'X');

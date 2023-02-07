@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.function.Function;
 
 
@@ -18,6 +19,8 @@ public class TextPlayer {
     final ArrayList<String> shipsToPlace;
     final HashMap<String, Function<Placement, Ship<Character>>> shipCreationFns;
 
+    private HashSet<Coordinate> attackedSet;
+
     public TextPlayer(String name, Board<Character> theBoard, 
     BufferedReader inputSource, PrintStream out, AbstractShipFactory<Character> factory) {
         this.name = name;
@@ -30,10 +33,15 @@ public class TextPlayer {
         this.shipCreationFns = new HashMap<String, Function<Placement, Ship<Character>>>();
         setupShipCreationList();
         setupShipCreationMap();
+        this.attackedSet = new HashSet<>();
     }
 
     public String getName() {
         return this.name;
+    }
+
+    public BoardTextView getView() {
+        return this.view;
     }
 
     // remember to check if the input is valid
@@ -105,5 +113,65 @@ public class TextPlayer {
             }
         }
         return true;
+    }
+
+    public Coordinate attackOneCoordinate(Board<Character> enemyBoard) throws IOException {
+        String prompt = "Please input a coordinate to attack\n";
+        while (true) {
+            out.print(prompt);
+            String s = inputReader.readLine();
+            try {
+                Coordinate c = new Coordinate(s);
+                if (attackedSet.contains(c)) {
+                    out.print("This coordinate has been attacked, please input another one!\n");
+                    continue;
+                } else {
+                    attackedSet.add(c);
+                    return c;
+                }
+            }
+            catch (IllegalArgumentException e) {
+                out.println(e);
+            }
+        }
+    }
+
+    public void playOneTurn(String enemyName, BoardTextView enemyView) throws IOException {
+        String myHeader = "Your ocean";
+        String enemyHeader = "Player " + enemyName + "'s ocean";
+        out.print("---------------------------------------------------------------------------\n");
+        out.print("Player " + this.name + "'s turn\n");
+        out.print(this.view.displayMyBoardWithEnemyNextToIt(enemyView, myHeader, enemyHeader));
+        out.print("---------------------------------------------------------------------------\n");
+        Board<Character> enemyBoard = enemyView.getBoard();
+        Coordinate attacked = attackOneCoordinate(enemyBoard);
+        enemyBoard.fireAt(attacked);
+        out.print(attackMessage(enemyBoard.whatIsAtForEnemy(attacked)));
+        // out.print("---------------------------------------------------------------------------\n");
+    }
+
+    public String attackMessage(char c) {
+        String ans = "You ";
+        if (c == 's' || c == 'd' || c == 'b' || c == 'c') {
+            ans += "hit a ";
+            switch(c) {
+                case 's':
+                ans += "submarine";
+                break;
+                case 'd':
+                ans += "destroyer";
+                break;
+                case 'b':
+                ans += "battleship";
+                break;
+                default:
+                ans += "carrier";
+                break;
+            }
+            ans += "!\n";
+        } else {
+            ans += "missed!\n";
+        }
+        return ans;
     }
 }

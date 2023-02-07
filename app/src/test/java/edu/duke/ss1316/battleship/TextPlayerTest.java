@@ -16,6 +16,11 @@ class TextPlayerTest {
       }
     
     @Test
+    public void test_getView() {
+
+    }
+    
+    @Test
     public void test_read_placement() throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         TextPlayer player = createTextPlayer(10, 20, "B2V\nC8H\na4v\nb2j\n", bytes);
@@ -33,36 +38,36 @@ class TextPlayerTest {
         // assertThrows(IllegalArgumentException.class, () -> player.readPlacement(prompt));
     }
 
-    @Disabled
     @Test
     public void test_do_one_placement() throws IOException {
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-      TextPlayer player = createTextPlayer(5, 3, "B0H\nA3V\nA3V\n", bytes);
+      TextPlayer player = createTextPlayer(5, 5, "B0H\nA3V\nA3V\n", bytes);
       String prompt = "Player A where do you want to place a Destroyer?\n";
-  
-      player.doOnePlacement("Destroyer", player.shipCreationFns.get("Destroyer"));
+      V1ShipFactory factory = new V1ShipFactory();
+      assertEquals(5, player.getView().getBoard().getWidth());
+      player.doOnePlacement("Destroyer", (p) -> factory.makeDestroyer(p));
       String expectedBoard = 
       "  0|1|2|3|4\n"+
       "A  | | | |  A\n"+
       "B d|d|d| |  B\n"+
       "C  | | | |  C\n"+
+      "D  | | | |  D\n"+
+      "E  | | | |  E\n"+
       "  0|1|2|3|4\n";
   
       assertEquals(prompt + expectedBoard, bytes.toString());
       bytes.reset();
-  
-      player.doOnePlacement("Destroyer", player.shipCreationFns.get("Destroyer"));
+      player.doOnePlacement("Destroyer", (p) -> factory.makeDestroyer(p));
       expectedBoard = 
       "  0|1|2|3|4\n"+
       "A  | | |d|  A\n"+
       "B d|d|d|d|  B\n"+
       "C  | | |d|  C\n"+
+      "D  | | | |  D\n"+
+      "E  | | | |  E\n"+
       "  0|1|2|3|4\n";
   
       assertEquals(prompt + expectedBoard, bytes.toString());
-      bytes.reset();
-      String warning = "The coordinate is taken by other ship!";
-      assertEquals(prompt + warning, bytes.toString());
       bytes.reset();
     }
   
@@ -72,5 +77,19 @@ class TextPlayerTest {
       TextPlayer player = createTextPlayer(5, 3, "B0H\nA3V\n", bytes);
       assertEquals("A", player.getName());
     }
-    
+
+    @Test
+    public void test_isLost() throws IOException {
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      BufferedReader input = new BufferedReader(new StringReader("b2h\n"));
+      PrintStream output = new PrintStream(bytes, true);
+      Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
+      V1ShipFactory factory = new V1ShipFactory();
+      TextPlayer player =  new TextPlayer("A", board, input, output, factory);
+      player.doOnePlacement("Submarine", player.shipCreationFns.get("Submarine"));
+      board.fireAt(new Coordinate("b2"));
+      assertEquals(false, player.isLost());
+      board.fireAt(new Coordinate("b3"));
+      assertEquals(true, player.isLost());
+    }
 }
