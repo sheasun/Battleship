@@ -3,20 +3,13 @@ package edu.duke.ss1316.battleship;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.HashSet;
-
 class RectangleShipTest {
     @Test
-    public void test_makeCoords() {
-        Coordinate c = new Coordinate(3, 4);
-        HashSet<Coordinate> set = RectangleShip.makeCoords(c, 2, 3);
-        HashSet<Coordinate> expected = new HashSet<>();
-        for (int i = 3; i < 3 + 3; ++i) {
-            for (int j = 4; j < 4 + 2; ++j) {
-                expected.add(new Coordinate(i, j));
-            }
-        }
-        assertEquals(expected, set);
+    public void test_constructer() {
+        Coordinate upperLeft = new Coordinate(2, 3);
+        RectangleShip<Character> ship = new RectangleShip<Character>(upperLeft, 's', '*');
+        assertEquals(true, ship.occupiesCoordinates(upperLeft));
+        assertEquals(false, ship.occupiesCoordinates(new Coordinate(0, 0)));
     }
 
     @Test
@@ -33,6 +26,7 @@ class RectangleShipTest {
                 rs.recordHitAt(new Coordinate(r, c));
             }
         }
+        rs.recordHitAt(new Coordinate(2, 3));
         for (int r = 2; r < 2 + 2; ++r) {
             for (int c = 3; c < 3 + 3; ++c) {
                 assertEquals(true, rs.wasHitAt(new Coordinate(r, c)));
@@ -62,9 +56,11 @@ class RectangleShipTest {
         for (int r = 2; r < 2 + 2; ++r) {
             for (int c = 3; c < 3 + 3; ++c) {
                 if ((r == 3 && c == 3)) {
-                    assertEquals('*', rs.getDisplayInfoAt(new Coordinate(r, c)));
+                    assertEquals('*', rs.getDisplayInfoAt(new Coordinate(r, c), true));
+                    assertEquals('s', rs.getDisplayInfoAt(new Coordinate(r, c), false));
                 } else {
-                    assertEquals('s', rs.getDisplayInfoAt(new Coordinate(r, c)));
+                    assertEquals('s', rs.getDisplayInfoAt(new Coordinate(r, c), true));
+                    assertEquals(null, rs.getDisplayInfoAt(new Coordinate(r, c), false));
                 }
             }
         }
@@ -77,7 +73,7 @@ class RectangleShipTest {
         RectangleShip<Character> rs = new RectangleShip<Character>("Submarine", c, 3, 2, 's', '*');
         Iterable<Coordinate> myPieces = rs.getCoordinates();
         for (Coordinate m : myPieces) {
-            assertEquals('s', rs.getDisplayInfoAt(m));
+            assertEquals('s', rs.getDisplayInfoAt(m, true));
         }
     }
 }

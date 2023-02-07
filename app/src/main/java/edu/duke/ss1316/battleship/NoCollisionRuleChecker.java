@@ -8,13 +8,14 @@ public class NoCollisionRuleChecker<T> extends PlacementRuleChecker<T> {
     // check if all the squares that theShip needs are empty
     // if so, return true
     @Override
-    protected boolean checkMyRule(Ship<T> theShip, Board<T> theBoard) {
+    protected String checkMyRule(Ship<T> theShip, Board<T> theBoard) {
         Iterable<Coordinate> myPieces = theShip.getCoordinates();
+        String s = "The coordinate is taken by other ship!";
         for (Coordinate c : myPieces) {
-          if (theBoard.whatIsAt(c) != null) {
-            return false;
+          if (theBoard.whatIsAtForSelf(c) != null) {
+            return s;
           }
         }
-        return true;
+        return null;
     }
 }

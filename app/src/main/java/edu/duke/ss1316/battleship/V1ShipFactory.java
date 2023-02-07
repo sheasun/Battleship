@@ -2,7 +2,7 @@ package edu.duke.ss1316.battleship;
 
 public class V1ShipFactory implements AbstractShipFactory<Character> {
     protected Ship<Character> createShip(Placement where, int w, int h, char letter, String name) {
-        Coordinate c = where.getCoordinate();
+        Coordinate c = where.getWhere();
         Character o = where.getOrientation();
         RectangleShip<Character> rs;
         if (o == 'H') {
@@ -12,8 +12,6 @@ public class V1ShipFactory implements AbstractShipFactory<Character> {
         }
         return rs;
       }
-
-    public V1ShipFactory() {}
 
     @Override
     public Ship<Character> makeSubmarine(Placement where) {

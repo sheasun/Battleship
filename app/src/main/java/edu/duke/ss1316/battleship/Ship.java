@@ -53,10 +53,11 @@ public interface Ship<T> {
      * must be part of the ship.
      * 
      * @param where is the coordinate to return information for
+     * @param myShip is the boolean to inform if it is my ship
      * @throws IllegalArgumentException if where is not part of the Ship
      * @return The view-specific information at that coordinate.
      */
-    public T getDisplayInfoAt(Coordinate where);
+    public T getDisplayInfoAt(Coordinate where, boolean myShip);
 
  /**
    * Get all of the Coordinates that this Ship occupies.

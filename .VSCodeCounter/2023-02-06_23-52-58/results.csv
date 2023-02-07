@@ -1,0 +1,37 @@
+"filename", "language", "Gradle", "Batch", "Java", "Java Properties", "XML", "comment", "blank", "total"
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/build.gradle", "Gradle", 21, 0, 0, 0, 0, 13, 7, 41
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/AbstractShipFactory.java", "Java", 0, 0, 7, 0, 0, 27, 10, 44
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/App.java", "Java", 0, 0, 23, 0, 0, 3, 7, 33
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/BasicShip.java", "Java", 0, 0, 60, 0, 0, 5, 11, 76
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/BattleShipBoard.java", "Java", 0, 0, 68, 0, 0, 3, 16, 87
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/Board.java", "Java", 0, 0, 9, 0, 0, 0, 7, 16
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/BoardTextView.java", "Java", 0, 0, 100, 0, 0, 22, 13, 135
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/Coordinate.java", "Java", 0, 0, 47, 0, 0, 0, 7, 54
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/InBoundRuleChecker.java", "Java", 0, 0, 21, 0, 0, 0, 2, 23
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/NoCollisionRuleChecker.java", "Java", 0, 0, 17, 0, 0, 2, 2, 21
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/Placement.java", "Java", 0, 0, 48, 0, 0, 0, 5, 53
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/PlacementRuleChecker.java", "Java", 0, 0, 18, 0, 0, 3, 3, 24
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/RectangleShip.java", "Java", 0, 0, 29, 0, 0, 0, 5, 34
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/Ship.java", "Java", 0, 0, 10, 0, 0, 51, 7, 68
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/ShipDisplayInfo.java", "Java", 0, 0, 4, 0, 0, 0, 2, 6
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/SimpleShipDisplayInfo.java", "Java", 0, 0, 16, 0, 0, 0, 3, 19
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/TextPlayer.java", "Java", 0, 0, 84, 0, 0, 1, 12, 97
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/V1ShipFactory.java", "Java", 0, 0, 30, 0, 0, 0, 5, 35
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/main.iml", "XML", 0, 0, 0, 0, 11, 0, 0, 11
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/AppTest.java", "Java", 0, 0, 35, 0, 0, 3, 5, 43
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/BattleShipBoardTest.java", "Java", 0, 0, 59, 0, 0, 2, 11, 72
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/BoardTextViewTest.java", "Java", 0, 0, 76, 0, 0, 1, 9, 86
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/CoordinateTest.java", "Java", 0, 0, 54, 0, 0, 0, 7, 61
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/InBoundRuleCheckerTest.java", "Java", 0, 0, 26, 0, 0, 0, 7, 33
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/NoCollisionRuleCheckerTest.java", "Java", 0, 0, 21, 0, 0, 0, 2, 23
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/PlacementTest.java", "Java", 0, 0, 59, 0, 0, 0, 10, 69
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/RectangleShipTest.java", "Java", 0, 0, 69, 0, 0, 0, 7, 76
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/SimpleShipDisplayInfoTest.java", "Java", 0, 0, 11, 0, 0, 0, 2, 13
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/TextPlayerTest.java", "Java", 0, 0, 60, 0, 0, 0, 11, 71
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/V1ShipFactoryTest.java", "Java", 0, 0, 68, 0, 0, 0, 7, 75
+"/Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/test.iml", "XML", 0, 0, 0, 0, 11, 0, 0, 11
+"/Users/shea/ece651-spr23-ss1316-hwk1/build.gradle", "Gradle", 26, 0, 0, 0, 0, 0, 3, 29
+"/Users/shea/ece651-spr23-ss1316-hwk1/gradle/wrapper/gradle-wrapper.properties", "Java Properties", 0, 0, 0, 5, 0, 0, 1, 6
+"/Users/shea/ece651-spr23-ss1316-hwk1/gradlew.bat", "Batch", 0, 68, 0, 0, 0, 0, 22, 90
+"/Users/shea/ece651-spr23-ss1316-hwk1/settings.gradle", "Gradle", 2, 0, 0, 0, 0, 8, 2, 12
+"Total", "-", 49, 68, 1129, 5, 22, 144, 230, 1647

@@ -6,17 +6,18 @@ public class InBoundRuleChecker<T> extends PlacementRuleChecker<T> {
     }
 
     @Override
-    protected boolean checkMyRule(Ship<T> theShip, Board<T> theBoard) {
+    protected String checkMyRule(Ship<T> theShip, Board<T> theBoard) {
       Iterable<Coordinate> myPieces = theShip.getCoordinates();
+      String warning = "Out of bounds!";
       for (Coordinate c : myPieces) {
         if (c.getRow() < 0 || c.getColumn() < 0) {
-            return false;
+            return warning;
         } else if (c.getRow() >= theBoard.getHeight()) {
-            return false;
+            return warning;
         } else if (c.getColumn() >= theBoard.getWidth()) {
-            return false;
+            return warning;
         }
       }
-      return true;
+      return null;
     }
 }

@@ -1,10 +1,11 @@
 package edu.duke.ss1316.battleship;
 
 public class Placement {
-    private final Coordinate coordinate;
+    private final Coordinate where;
     private final char orientation;
     public Placement(Coordinate c, char o) {
-        this.coordinate = c;
+        checkOrientation(o);
+        this.where = c;
         this.orientation = Character.toUpperCase(o);
     }
 
@@ -13,29 +14,37 @@ public class Placement {
         throw new IllegalArgumentException("Please input correct format placement info (3 characters)");
       }
       String substr = descr.substring(0, 2);
-      this.coordinate = new Coordinate(substr);
-      this.orientation = Character.toUpperCase(descr.charAt(2));
+      char o = Character.toUpperCase(descr.charAt(2));
+      checkOrientation(o);
+      this.where = new Coordinate(substr);
+      this.orientation = o;
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Coordinate getWhere() {
+        return where;
     }
     public char getOrientation() {
         return orientation;
     }
 
+    public void checkOrientation(char o) {
+      if (o == 'h' || o == 'H' || o == 'v' || o == 'V') {
+      } else {
+        throw new IllegalArgumentException("Please input correct orientation ('h'/'H'/'v'/'V')");
+      }
+    }
     @Override
     public boolean equals(Object o) {
       if (o.getClass().equals(getClass())) {
         Placement p = (Placement) o;
-        return this.coordinate.equals(p.coordinate) && this.orientation == p.orientation;
+        return this.where.equals(p.where) && this.orientation == p.orientation;
       }
       return false;
     }
 
     @Override
     public String toString() {
-      return "("+ this.coordinate.toString() + ", " + orientation +")";
+      return "("+ this.where.toString() + ", " + orientation +")";
     }
     @Override
     public int hashCode() {

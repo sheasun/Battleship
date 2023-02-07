@@ -1,0 +1,83 @@
+Date : 2023-02-06 23:53:47
+Directory : /Users/shea/ece651-spr23-ss1316-hwk1
+Total : 35 files,  1273 codes, 144 comments, 230 blanks, all 1647 lines
+
+Languages
++-----------------+------------+------------+------------+------------+------------+
+| language        | files      | code       | comment    | blank      | total      |
++-----------------+------------+------------+------------+------------+------------+
+| Java            |         28 |      1,129 |        123 |        195 |      1,447 |
+| Batch           |          1 |         68 |          0 |         22 |         90 |
+| Gradle          |          3 |         49 |         21 |         12 |         82 |
+| XML             |          2 |         22 |          0 |          0 |         22 |
+| Java Properties |          1 |          5 |          0 |          1 |          6 |
++-----------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                              | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                 |         35 |      1,273 |        144 |        230 |      1,647 |
+| . (Files)                                                                                                         |          3 |         96 |          8 |         27 |        131 |
+| app                                                                                                               |         31 |      1,172 |        136 |        202 |      1,510 |
+| app (Files)                                                                                                       |          1 |         21 |         13 |          7 |         41 |
+| app/src                                                                                                           |         30 |      1,151 |        123 |        195 |      1,469 |
+| app/src/main                                                                                                      |         18 |        602 |        117 |        117 |        836 |
+| app/src/main (Files)                                                                                              |          1 |         11 |          0 |          0 |         11 |
+| app/src/main/java                                                                                                 |         17 |        591 |        117 |        117 |        825 |
+| app/src/main/java/edu                                                                                             |         17 |        591 |        117 |        117 |        825 |
+| app/src/main/java/edu/duke                                                                                        |         17 |        591 |        117 |        117 |        825 |
+| app/src/main/java/edu/duke/ss1316                                                                                 |         17 |        591 |        117 |        117 |        825 |
+| app/src/main/java/edu/duke/ss1316/battleship                                                                      |         17 |        591 |        117 |        117 |        825 |
+| app/src/test                                                                                                      |         12 |        549 |          6 |         78 |        633 |
+| app/src/test (Files)                                                                                              |          1 |         11 |          0 |          0 |         11 |
+| app/src/test/java                                                                                                 |         11 |        538 |          6 |         78 |        622 |
+| app/src/test/java/edu                                                                                             |         11 |        538 |          6 |         78 |        622 |
+| app/src/test/java/edu/duke                                                                                        |         11 |        538 |          6 |         78 |        622 |
+| app/src/test/java/edu/duke/ss1316                                                                                 |         11 |        538 |          6 |         78 |        622 |
+| app/src/test/java/edu/duke/ss1316/battleship                                                                      |         11 |        538 |          6 |         78 |        622 |
+| gradle                                                                                                            |          1 |          5 |          0 |          1 |          6 |
+| gradle/wrapper                                                                                                    |          1 |          5 |          0 |          1 |          6 |
++-------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| filename                                                                                                          | language        | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/build.gradle                                                             | Gradle          |         21 |         13 |          7 |         41 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/AbstractShipFactory.java        | Java            |          7 |         27 |         10 |         44 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/App.java                        | Java            |         23 |          3 |          7 |         33 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/BasicShip.java                  | Java            |         60 |          5 |         11 |         76 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/BattleShipBoard.java            | Java            |         68 |          3 |         16 |         87 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/Board.java                      | Java            |          9 |          0 |          7 |         16 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/BoardTextView.java              | Java            |        100 |         22 |         13 |        135 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/Coordinate.java                 | Java            |         47 |          0 |          7 |         54 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/InBoundRuleChecker.java         | Java            |         21 |          0 |          2 |         23 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/NoCollisionRuleChecker.java     | Java            |         17 |          2 |          2 |         21 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/Placement.java                  | Java            |         48 |          0 |          5 |         53 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/PlacementRuleChecker.java       | Java            |         18 |          3 |          3 |         24 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/RectangleShip.java              | Java            |         29 |          0 |          5 |         34 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/Ship.java                       | Java            |         10 |         51 |          7 |         68 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/ShipDisplayInfo.java            | Java            |          4 |          0 |          2 |          6 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/SimpleShipDisplayInfo.java      | Java            |         16 |          0 |          3 |         19 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/TextPlayer.java                 | Java            |         84 |          1 |         12 |         97 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/java/edu/duke/ss1316/battleship/V1ShipFactory.java              | Java            |         30 |          0 |          5 |         35 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/main/main.iml                                                        | XML             |         11 |          0 |          0 |         11 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/AppTest.java                    | Java            |         35 |          3 |          5 |         43 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/BattleShipBoardTest.java        | Java            |         59 |          2 |         11 |         72 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/BoardTextViewTest.java          | Java            |         76 |          1 |          9 |         86 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/CoordinateTest.java             | Java            |         54 |          0 |          7 |         61 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/InBoundRuleCheckerTest.java     | Java            |         26 |          0 |          7 |         33 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/NoCollisionRuleCheckerTest.java | Java            |         21 |          0 |          2 |         23 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/PlacementTest.java              | Java            |         59 |          0 |         10 |         69 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/RectangleShipTest.java          | Java            |         69 |          0 |          7 |         76 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/SimpleShipDisplayInfoTest.java  | Java            |         11 |          0 |          2 |         13 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/TextPlayerTest.java             | Java            |         60 |          0 |         11 |         71 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/java/edu/duke/ss1316/battleship/V1ShipFactoryTest.java          | Java            |         68 |          0 |          7 |         75 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/app/src/test/test.iml                                                        | XML             |         11 |          0 |          0 |         11 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/build.gradle                                                                 | Gradle          |         26 |          0 |          3 |         29 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/gradle/wrapper/gradle-wrapper.properties                                     | Java Properties |          5 |          0 |          1 |          6 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/gradlew.bat                                                                  | Batch           |         68 |          0 |         22 |         90 |
+| /Users/shea/ece651-spr23-ss1316-hwk1/settings.gradle                                                              | Gradle          |          2 |          8 |          2 |         12 |
+| Total                                                                                                             |                 |      1,273 |        144 |        230 |      1,647 |
++-------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
