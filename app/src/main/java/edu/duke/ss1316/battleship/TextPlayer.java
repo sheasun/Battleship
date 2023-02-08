@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.function.Function;
 
 
@@ -19,21 +18,23 @@ public class TextPlayer {
     final ArrayList<String> shipsToPlace;
     final HashMap<String, Function<Placement, Ship<Character>>> shipCreationFns;
 
-    private HashSet<Coordinate> attackedSet;
+
+    private int move, scan;
 
     public TextPlayer(String name, Board<Character> theBoard, 
     BufferedReader inputSource, PrintStream out, AbstractShipFactory<Character> factory) {
         this.name = name;
         this.theBoard = theBoard;
         this.view = new BoardTextView(theBoard);
-        this.inputReader = new BufferedReader(inputSource);
+        this.inputReader = inputSource;
         this.out = out;
         this.shipFactory = factory;
         this.shipsToPlace = new ArrayList<String>();
         this.shipCreationFns = new HashMap<String, Function<Placement, Ship<Character>>>();
         setupShipCreationList();
         setupShipCreationMap();
-        this.attackedSet = new HashSet<>();
+        this.move = 3;
+        this.scan = 1;
     }
 
     public String getName() {
@@ -114,6 +115,16 @@ public class TextPlayer {
         }
         return true;
     }
+    public boolean checkIfCoordinateInBound(Coordinate c) {
+        int row = c.getRow();
+        int col = c.getColumn();
+        int width = theBoard.getHeight();
+        int height = theBoard.getWidth();
+        if (row > height || col > width) {
+            return false;
+        }
+        return true;
+    }
 
     public Coordinate attackOneCoordinate(Board<Character> enemyBoard) throws IOException {
         String prompt = "Please input a coordinate to attack\n";
@@ -122,12 +133,11 @@ public class TextPlayer {
             String s = inputReader.readLine();
             try {
                 Coordinate c = new Coordinate(s);
-                if (attackedSet.contains(c)) {
-                    out.print("This coordinate has been attacked, please input another one!\n");
-                    continue;
-                } else {
-                    attackedSet.add(c);
+                if (checkIfCoordinateInBound(c)) {
                     return c;
+                } else {
+                    out.println("Please input a coordinate in bound!");
+                    continue;
                 }
             }
             catch (IllegalArgumentException e) {
@@ -136,6 +146,95 @@ public class TextPlayer {
         }
     }
 
+    /* 
+     * taking the action that moving one ship to a new coordinate
+     */
+    // public Coordinate moveToNewCoordinate(Board<Character> enemyBoard) throws IOException {
+    //     String prompt = "Please input a coordinate to move\n";
+    //     while (true) {
+    //         out.print(prompt);
+    //         String s = inputReader.readLine();
+    //         try {
+    //             Coordinate c = new Coordinate(s);
+    //             if (attackedSet.contains(c)) {
+    //                 out.print("This coordinate has been attacked, please input another one!\n");
+    //                 continue;
+    //             } else {
+    //                 attackedSet.add(c);
+    //                 return c;
+    //             }
+    //         }
+    //         catch (IllegalArgumentException e) {
+    //             out.println(e);
+    //         }
+    //     }
+    // }
+
+    /* 
+     * the action each player takes
+     * there are three options for each player
+     * F Fire at a square
+     * M Move a ship to another square (2 remaining)
+     * S Sonar scan (1 remaining)
+     */
+    // public void chooseFromOptions(BoardTextView enemyView) throws IOException {
+    //     String prompt = "Possible actions for Player " + this.name + "\n" 
+    //     + "F Fire at a square\n";
+    //     if (this.move > 0) {
+    //         prompt += "M Move a ship to another square (" + this.move + " remaining\n";
+    //     }
+    //     if (this.scan > 0) {
+    //         prompt += "S Sonar scan (" + this.scan + " remaining\n";
+    //     }
+    //     prompt += "Player " + this.name + ", what would you like to do?\n";
+    //     prompt += "---------------------------------------------------------------------------\n";
+    //     while (true) {
+    //         out.print(prompt);
+    //         String s = inputReader.readLine();
+    //         if (s == "F") {
+    //             if (!takeAttackingAction(enemyView)) {
+    //                 continue;
+    //             } else {
+    //                 break;
+    //             }
+    //         } else if (s == "M") {
+    //             if (!takeMovingAction()) {
+    //                 continue;
+    //             } else {
+    //                 break;
+    //             }
+    //         } else if (s == "S") {
+    //             if (!takeScanningAction()) {
+    //                 continue;
+    //             } else {
+    //                 break;
+    //             }
+    //         } else {
+    //             continue;
+    //         }
+    //     }
+    // }
+
+    // public boolean takeAttackingAction(BoardTextView enemyView) throws IOException {
+    //     Board<Character> enemyBoard = enemyView.getBoard();
+    //     Coordinate attacked = attackOneCoordinate(enemyBoard);
+    //     if (attacked == null) {
+    //         return false;
+    //     }
+    //     enemyBoard.fireAt(attacked);
+    //     out.print(attackMessage(enemyBoard.whatIsAtForEnemy(attacked)));
+    //     return true;
+    // }
+
+    // public void takeMovingAction(BoardTextView enemyView) throws IOException {
+    //     Board<Character> enemyBoard = enemyView.getBoard();
+    //     Coordinate newCoor = moveToNewCoordinate(enemyBoard);
+    // }
+
+    /* 
+     * the function includes all printed messages and input part from the player
+     * in the each turn
+     */
     public void playOneTurn(String enemyName, BoardTextView enemyView) throws IOException {
         String myHeader = "Your ocean";
         String enemyHeader = "Player " + enemyName + "'s ocean";
@@ -143,6 +242,7 @@ public class TextPlayer {
         out.print("Player " + this.name + "'s turn\n");
         out.print(this.view.displayMyBoardWithEnemyNextToIt(enemyView, myHeader, enemyHeader));
         out.print("---------------------------------------------------------------------------\n");
+        // chooseFromOptions(enemyView);
         Board<Character> enemyBoard = enemyView.getBoard();
         Coordinate attacked = attackOneCoordinate(enemyBoard);
         enemyBoard.fireAt(attacked);

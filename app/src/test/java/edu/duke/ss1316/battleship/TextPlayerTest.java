@@ -4,6 +4,9 @@ import java.io.*;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import com.google.common.primitives.Bytes;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TextPlayerTest {
@@ -16,25 +19,25 @@ class TextPlayerTest {
       }
     
     @Test
-    public void test_getView() {
-
-    }
-    
-    @Test
     public void test_read_placement() throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        TextPlayer player = createTextPlayer(10, 20, "B2V\nC8H\na4v\nb2j\n", bytes);
+        TextPlayer player = createTextPlayer(10, 20, "b2v\nc8h\na4v\nb2j\nb2h\n", bytes);
         String prompt = "Please enter a location for a ship:\n";
-        Placement[] expected = new Placement[3];
+        Placement[] expected = new Placement[4];
         expected[0] = new Placement(new Coordinate(1, 2), 'V');
         expected[1] = new Placement(new Coordinate(2, 8), 'H');
         expected[2] = new Placement(new Coordinate(0, 4), 'V');
-        for (int i = 0; i < expected.length; i++) {
+        // expected[3] = new Placement(new Coordinate(0, 4), 'j');
+        for (int i = 0; i < expected.length - 1; i++) {
           Placement p = player.readPlacement(prompt);
           assertEquals(p, expected[i]);
           assertEquals(prompt, bytes.toString());
           bytes.reset();
         }
+        String prompt2 = prompt + "java.lang.IllegalArgumentException: Please input correct orientation\n" + prompt;
+        player.readPlacement(prompt);
+        assertEquals(prompt2, bytes.toString());
+        bytes.reset();
         // assertThrows(IllegalArgumentException.class, () -> player.readPlacement(prompt));
     }
 
@@ -91,5 +94,25 @@ class TextPlayerTest {
       assertEquals(false, player.isLost());
       board.fireAt(new Coordinate("b3"));
       assertEquals(true, player.isLost());
+    }
+
+    @Test
+    public void test_attackOneCoordinate() throws IOException {
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      TextPlayer player = createTextPlayer(10, 20, "22\nb2\n", bytes);
+      String prompt = "Please input a coordinate to attack\njava.lang.IllegalArgumentException: Input row format is invalid!\nPlease input a coordinate to attack\n";
+      Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
+      player.attackOneCoordinate(board);
+      assertEquals(prompt, bytes.toString());
+    }
+
+    @Test
+    public void test_checkIfCoordinateInBound() throws IOException {
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      TextPlayer player = createTextPlayer(10, 20, "z2\nb2\n", bytes);
+      String prompt = "Please input a coordinate to attack\nPlease input a coordinate in bound!\nPlease input a coordinate to attack\n";
+      Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
+      player.attackOneCoordinate(board);
+      assertEquals(prompt, bytes.toString());
     }
 }

@@ -28,9 +28,11 @@ public class Placement {
     }
 
     public void checkOrientation(char o) {
-      if (o == 'h' || o == 'H' || o == 'v' || o == 'V') {
+      if (o == 'h' || o == 'H' || o == 'v' || o == 'V' || 
+      o == 'u' || o == 'U' || o == 'd' || o == 'D' || 
+      o == 'l' || o == 'L' || o == 'r' || o == 'R') {
       } else {
-        throw new IllegalArgumentException("Please input correct orientation ('h'/'H'/'v'/'V')");
+        throw new IllegalArgumentException("Please input correct orientation");
       }
     }
     @Override
