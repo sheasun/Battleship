@@ -1,6 +1,7 @@
 package edu.duke.ss1316.battleship;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 public class RectangleShip<T> extends BasicShip<T> {
     private final String name;
@@ -18,8 +19,8 @@ public class RectangleShip<T> extends BasicShip<T> {
         this("testship", upperLeft, 1, 1, data, onHit);
       }
 
-    static HashSet<Coordinate> makeCoords(Coordinate upperLeft, int width, int height) {
-        HashSet<Coordinate> set = new HashSet<Coordinate>();
+    static LinkedHashSet<Coordinate> makeCoords(Coordinate upperLeft, int width, int height) {
+        LinkedHashSet<Coordinate> set = new LinkedHashSet<Coordinate>();
         int row = upperLeft.getRow();
         int column = upperLeft.getColumn();
     

@@ -14,7 +14,7 @@ class TextPlayerTest {
         BufferedReader input = new BufferedReader(new StringReader(inputData));
         PrintStream output = new PrintStream(bytes, true);
         Board<Character> board = new BattleShipBoard<Character>(w, h, 'X');
-        V1ShipFactory shipFactory = new V1ShipFactory();
+        V2ShipFactory shipFactory = new V2ShipFactory();
         return new TextPlayer("A", board, input, output, shipFactory);
       }
     
@@ -46,7 +46,7 @@ class TextPlayerTest {
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
       TextPlayer player = createTextPlayer(5, 5, "B0H\nA3V\nA3V\n", bytes);
       String prompt = "Player A where do you want to place a Destroyer?\n";
-      V1ShipFactory factory = new V1ShipFactory();
+      V2ShipFactory factory = new V2ShipFactory();
       assertEquals(5, player.getView().getBoard().getWidth());
       player.doOnePlacement("Destroyer", (p) -> factory.makeDestroyer(p));
       String expectedBoard = 
@@ -87,7 +87,7 @@ class TextPlayerTest {
       BufferedReader input = new BufferedReader(new StringReader("b2h\n"));
       PrintStream output = new PrintStream(bytes, true);
       Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
-      V1ShipFactory factory = new V1ShipFactory();
+      V2ShipFactory factory = new V2ShipFactory();
       TextPlayer player =  new TextPlayer("A", board, input, output, factory);
       player.doOnePlacement("Submarine", player.shipCreationFns.get("Submarine"));
       board.fireAt(new Coordinate("b2"));
@@ -100,7 +100,7 @@ class TextPlayerTest {
     public void test_attackOneCoordinate() throws IOException {
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
       TextPlayer player = createTextPlayer(10, 20, "22\nb2\n", bytes);
-      String prompt = "Please input a coordinate to attack\njava.lang.IllegalArgumentException: Input row format is invalid!\nPlease input a coordinate to attack\n";
+      String prompt = "Please input a coordinate to attack\njava.lang.IllegalArgumentException: Input row format is invalid!\n";
       Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
       player.attackOneCoordinate(board);
       assertEquals(prompt, bytes.toString());
@@ -110,7 +110,7 @@ class TextPlayerTest {
     public void test_checkIfCoordinateInBound() throws IOException {
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
       TextPlayer player = createTextPlayer(10, 20, "z2\nb2\n", bytes);
-      String prompt = "Please input a coordinate to attack\nPlease input a coordinate in bound!\nPlease input a coordinate to attack\n";
+      String prompt = "Please input a coordinate to attack\nPlease input a coordinate in bound!\n";
       Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
       player.attackOneCoordinate(board);
       assertEquals(prompt, bytes.toString());

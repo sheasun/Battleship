@@ -2,6 +2,8 @@ package edu.duke.ss1316.battleship;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashMap;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -24,32 +26,32 @@ public class BattleShipBoardTest {
   @Test
   public void test_tryAddShip() {
     Board<Character> b = new BattleShipBoard<>(10, 20, new InBoundRuleChecker<>(new NoCollisionRuleChecker<>(null)), 'X');
-    V1ShipFactory sf = new V1ShipFactory();
+    V2ShipFactory factory = new V2ShipFactory();
     // InBoundRuleChecker
     String s1 = "The coordinate is taken by other ship!";
     // NoCollisionRuleChecker
     String s2 = "Out of bounds!";
-    Ship<Character> ship1 = sf.makeSubmarine(new Placement(new Coordinate(0, 8), 'h'));
+    Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(0, 8), 'h'));
     assertEquals(null, b.tryAddShip(ship1));
 
-    Ship<Character> ship2 = sf.makeSubmarine(new Placement(new Coordinate(0, 9), 'h'));
+    Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(0, 9), 'h'));
     assertEquals(s2, b.tryAddShip(ship2));
     b.tryAddShip(ship1);
     assertEquals(s1, b.tryAddShip(ship1));
 
-    Ship<Character> ship3 = sf.makeSubmarine(new Placement(new Coordinate(18, 0), 'v'));
+    Ship<Character> ship3 = factory.makeSubmarine(new Placement(new Coordinate(18, 0), 'v'));
     assertEquals(null, b.tryAddShip(ship3));
     b.tryAddShip(ship3);
     assertEquals(s1, b.tryAddShip(ship3));
 
-    Ship<Character> ship4 = sf.makeSubmarine(new Placement(new Coordinate(19, 0), 'v'));
+    Ship<Character> ship4 = factory.makeSubmarine(new Placement(new Coordinate(19, 0), 'v'));
     assertEquals(s2, b.tryAddShip(ship4));
   }
 
   @Test
   public void test_whatIsAt() {
     Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
-    V1ShipFactory factory = new V1ShipFactory();
+    V2ShipFactory factory = new V2ShipFactory();
     Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
     Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(0, 0), 'v'));
     board.tryAddShip(ship1);
@@ -61,13 +63,30 @@ public class BattleShipBoardTest {
   @Test
   public void test_fireAt() {
     Board<Character> board = new BattleShipBoard<Character>(10, 20, new InBoundRuleChecker<>(new NoCollisionRuleChecker<>(null)), 'X');
-    V1ShipFactory sf = new V1ShipFactory();
-    Ship<Character> ship1 = sf.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
-    Ship<Character> ship2 = sf.makeSubmarine(new Placement(new Coordinate(0, 0), 'v'));
+    V2ShipFactory factory = new V2ShipFactory();
+    Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
+    Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(0, 0), 'v'));
     board.tryAddShip(ship1);
     board.tryAddShip(ship2);
     assertSame(null, board.fireAt(new Coordinate(1, 3)));
     assertSame(ship1, board.fireAt(new Coordinate(2, 3)));
+  }
+
+  @Test
+  public void test_findShipsBySonar() {
+    Board<Character> board = new BattleShipBoard<Character>(10, 20, new InBoundRuleChecker<>(new NoCollisionRuleChecker<>(null)), 'X');
+    V2ShipFactory factory = new V2ShipFactory();
+    Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
+    HashMap<String, Integer> map = new HashMap<>();
+    map.put("Submarine", 0);
+    map.put("Destroyer", 0);
+    map.put("Battleship", 0);
+    map.put("Carrier", 0);
+    assertEquals(map, board.findShipsBySonar(new Coordinate(2, 3)));
+    map.put("Submarine", 2);
+    board.tryAddShip(ship1);
+    assertEquals(map, board.findShipsBySonar(new Coordinate(2, 3)));
+    
   }
 
 }

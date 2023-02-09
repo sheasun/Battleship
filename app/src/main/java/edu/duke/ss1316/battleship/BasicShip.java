@@ -1,9 +1,13 @@
 package edu.duke.ss1316.battleship;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class BasicShip<T> implements Ship<T> {
-    protected HashMap<Coordinate, Boolean> myPieces;
+    protected LinkedHashMap<Coordinate, Boolean> myPieces;
     protected ShipDisplayInfo<T> myDisplayInfo;
 
     protected ShipDisplayInfo<T> enemyDisplayInfo;
@@ -11,7 +15,8 @@ public abstract class BasicShip<T> implements Ship<T> {
     public BasicShip(Iterable<Coordinate> where, ShipDisplayInfo<T> myDisplayInfo, ShipDisplayInfo<T> enemDisplayInfo) {
         this.myDisplayInfo = myDisplayInfo;
         this.enemyDisplayInfo = enemDisplayInfo;
-        this.myPieces = new HashMap<Coordinate, Boolean>();
+        // this.myPieces = new HashMap<Coordinate, Boolean>();
+        this.myPieces = new LinkedHashMap<Coordinate, Boolean>();
         for (Coordinate c : where) {
             myPieces.put(c, false);
         }
@@ -72,5 +77,19 @@ public abstract class BasicShip<T> implements Ship<T> {
 
     public Iterable<Coordinate> getCoordinates() {
         return this.myPieces.keySet();
+    }
+
+    public LinkedHashMap<Coordinate, Boolean> getMyPieces() {
+        return this.myPieces;
+    }
+
+    public void updatePieces(LinkedHashMap<Coordinate, Boolean> oldPieces) {
+        Iterator<Entry<Coordinate, Boolean>> myIterator = this.myPieces.entrySet().iterator();
+        Iterator<Entry<Coordinate, Boolean>> oldIterator = oldPieces.entrySet().iterator();
+        while (oldIterator.hasNext()) {
+          Map.Entry<Coordinate, Boolean> entry1 = (Map.Entry<Coordinate, Boolean>)oldIterator.next();
+          Map.Entry<Coordinate, Boolean> entry2 = (Map.Entry<Coordinate, Boolean>)myIterator.next();
+          entry2.setValue(entry1.getValue());
+        }
     }
 }

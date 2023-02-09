@@ -1,6 +1,7 @@
 package edu.duke.ss1316.battleship;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface Board<T> {
   public int getWidth();
@@ -16,4 +17,10 @@ public interface Board<T> {
   public Ship<T> fireAt(Coordinate c);
 
   public ArrayList<Ship<T>> getShips();
+
+  public Ship<T> getShip(Coordinate c);
+
+  public void removeShip(Ship<Character> ship);
+
+  public HashMap<String, Integer> findShipsBySonar(Coordinate c);
 }
