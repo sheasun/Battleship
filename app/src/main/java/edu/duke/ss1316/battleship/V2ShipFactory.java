@@ -30,18 +30,10 @@ public class V2ShipFactory implements AbstractShipFactory<Character> {
       }
 
       protected Ship<Character> createShip(Placement where, int w, int h, char letter, String name) {
-        char orientation = where.getOrientation();
-        if (orientation == 'H' || orientation == 'V') {
-            return new RectangleShip<Character>(name, where.getWhere(), w, h, letter, '*');
+        if (name.equals("Submarine") || name.equals("Destroyer")) {
+          return new RectangleShip<Character>(name, where.getWhere(), w, h, letter, '*');
         } else {
             return new NonRectangleShip<Character>(name, where, w, h, letter, '*');
         }
       }
-      // protected Ship<Character> createTShip(Placement where, int w, int h, char letter, String name) {
-      //   return new NonRectangleShip<Character>(name, where, w, h, letter, '*'); 
-      // }
-      // protected Ship<Character> createZShip(Placement where, int w, int h, char letter, String name) {
-      //   return new NonRectangleShip<Character>(name, where, w, h, letter, '*');
-      // }
-  
 }

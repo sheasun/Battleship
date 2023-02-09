@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Random;
 import java.util.function.Function;
 
 
@@ -19,11 +20,15 @@ public class TextPlayer {
     final ArrayList<String> shipsToPlace;
     final HashMap<String, Function<Placement, Ship<Character>>> shipCreationFns;
 
+    // true: human; false: computer
+    private final boolean human;
+    private final ArrayList<Placement> computerShips;
 
     private int move, scan;
+    private Random random;
 
     public TextPlayer(String name, Board<Character> theBoard, 
-    BufferedReader inputSource, PrintStream out, AbstractShipFactory<Character> factory) {
+    BufferedReader inputSource, PrintStream out, AbstractShipFactory<Character> factory, boolean human) {
         this.name = name;
         this.theBoard = theBoard;
         this.view = new BoardTextView(theBoard);
@@ -36,6 +41,8 @@ public class TextPlayer {
         setupShipCreationMap();
         this.move = 3;
         this.scan = 3;
+        this.human = human;
+        computerShips = new ArrayList<>();
     }
 
     public String getName() {
@@ -46,7 +53,6 @@ public class TextPlayer {
         return this.view;
     }
 
-    // remember to check if the input is valid
     public Placement readPlacement(String prompt) throws IOException {
         while (true) {
             out.print(prompt);
@@ -119,16 +125,16 @@ public class TextPlayer {
     public boolean checkIfCoordinateInBound(Coordinate c) {
         int row = c.getRow();
         int col = c.getColumn();
-        int width = theBoard.getHeight();
-        int height = theBoard.getWidth();
-        if (row > height || col > width) {
-            return false;
+        int height = theBoard.getHeight();
+        int width = theBoard.getWidth();
+        if (row >= 0 && row < height && col >= 0 && col < width) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     public Coordinate attackOneCoordinate(Board<Character> enemyBoard) throws IOException {
-        String prompt = "Please input a coordinate to attack\n";
+        String prompt = "Player " + this.name + ": where would you want to attack\n";
         // while (true) {
             out.print(prompt);
             String s = inputReader.readLine();
@@ -267,7 +273,7 @@ public class TextPlayer {
      * if it is valid, go to the enemy's board to calculate the squares of each type of ship
      */
     public boolean takeScanningAction(BoardTextView enemyView) throws IOException {
-        String prompt = "Player " + this.name + " please input the coordinate of the sonar scan\n";
+        String prompt = "Player " + this.name + ": please input the coordinate of the sonar scan\n";
         Coordinate c = readSonarCoordinate(prompt);
         if (c == null) {
             return false;
@@ -291,7 +297,8 @@ public class TextPlayer {
      * S Sonar scan (1 remaining)
      */
     public void chooseFromOptions(BoardTextView enemyView) throws IOException {
-        String prompt = "Possible actions for Player " + this.name + "\n" 
+        String prompt = "---------------------------------------------------------------------------\n"
+        + "Possible actions for Player " + this.name + "\n\n" 
         + "F Fire at a square\n";
         if (this.move > 0) {
             prompt += "M Move a ship to another square (" + this.move + " remaining)\n";
@@ -304,6 +311,7 @@ public class TextPlayer {
         while (true) {
             out.print(prompt);
             String s = inputReader.readLine();
+            s = s.toUpperCase();
             if (s.equals("F")) {
                 if (!takeAttackingAction(enemyView)) {
                     continue;
@@ -335,17 +343,19 @@ public class TextPlayer {
      * in the each turn
      */
     public void playOneTurn(String enemyName, BoardTextView enemyView) throws IOException {
-        String myHeader = "Your ocean";
-        String enemyHeader = "Player " + enemyName + "'s ocean";
-        out.print("---------------------------------------------------------------------------\n");
-        out.print("Player " + this.name + "'s turn\n");
-        out.print(this.view.displayMyBoardWithEnemyNextToIt(enemyView, myHeader, enemyHeader));
-        out.print("---------------------------------------------------------------------------\n");
-        chooseFromOptions(enemyView);
-        // Board<Character> enemyBoard = enemyView.getBoard();
-        // Coordinate attacked = attackOneCoordinate(enemyBoard);
-        // enemyBoard.fireAt(attacked);
-        // out.print(attackMessage(enemyBoard.whatIsAtForEnemy(attacked)));
+        if (human) {
+            String myHeader = "Your ocean";
+            String enemyHeader = "Player " + enemyName + "'s ocean";
+            out.print("---------------------------------------------------------------------------\n");
+            out.print("Player " + this.name + "'s turn\n");
+            out.print(this.view.displayMyBoardWithEnemyNextToIt(enemyView, myHeader, enemyHeader));
+            chooseFromOptions(enemyView);
+            out.print(this.view.displayMyBoardWithEnemyNextToIt(enemyView, myHeader, enemyHeader));
+            out.print("---------------------------------------------------------------------------\n");
+        } else {
+            actionByComputer(enemyView);
+        }
+
     }
 
     public String attackMessage(char c) {
@@ -371,5 +381,92 @@ public class TextPlayer {
             ans += "missed!\n";
         }
         return ans;
+    }
+
+    public void checkBeforeDoPlacement() throws IOException {
+        if (human) {
+            doPlacementPhase();
+        } else {
+            // computer action
+            actionWhenDoPlacement();
+        }
+    }
+
+    /* 
+     * actions taken by the computer
+     */
+    public void actionByComputer(BoardTextView enemyView) throws IOException {
+        // actionWhenDoPlacement();
+        actionWhenDoAttacking(enemyView);
+    }
+    public void createComputerShips() {
+        // #1
+        computerShips.add(new Placement("a0h"));
+        // #2
+        computerShips.add(new Placement("a2h"));
+        // #3
+        computerShips.add(new Placement("a4h"));
+        // #4
+        computerShips.add(new Placement("a7h"));
+        // #5
+        computerShips.add(new Placement("b0v"));
+        // #6
+        computerShips.add(new Placement("b1u"));
+        // #7
+        computerShips.add(new Placement("b4d"));
+        // #8
+        computerShips.add(new Placement("b8l"));
+        // #9
+        computerShips.add(new Placement("e2u"));
+        // #10
+        computerShips.add(new Placement("e5r"));
+    }
+    public void actionWhenDoPlacement() throws IOException {
+        createComputerShips();
+        for(int i = 0; i < this.shipsToPlace.size(); ++i){
+            String shipName = this.shipsToPlace.get(i);
+            Ship<Character> ship = this.shipCreationFns.get(shipName).apply(this.computerShips.get(i));
+            this.theBoard.tryAddShip(ship);
+        }
+    }
+
+    /* 
+     * computer action
+     * do attack
+     */
+    public void actionWhenDoAttacking(BoardTextView enemyView) throws IOException {
+        Board<Character> enemyBoard = enemyView.getBoard();
+        random = new Random();
+        int row = random.nextInt(0, enemyBoard.getHeight());
+        int col = random.nextInt(0, enemyBoard.getWidth());
+        Coordinate coor = new Coordinate(row, col);
+        enemyBoard.fireAt(coor);
+        char c = enemyBoard.whatIsAtForEnemy(coor);
+        printActionMessage(coor, c);
+    }
+    public void printActionMessage(Coordinate coor, char c) {
+        String ans = "Player " + this.name + " hit your ";
+        boolean hit = true;
+        switch(c) {
+            case 's':
+            ans += "submarine at ";
+            break;
+            case 'd':
+            ans += "destroyer at ";
+            break;
+            case 'b':
+            ans += "battleship at ";
+            break;
+            case 'c':
+            ans += "carrier at ";
+            break;
+            default:
+            ans = "Player " + this.name + " missed\n";
+            hit = false;
+        }
+        if (hit) {
+            ans += coor + "!\n";
+        }
+        out.print(ans);
     }
 }

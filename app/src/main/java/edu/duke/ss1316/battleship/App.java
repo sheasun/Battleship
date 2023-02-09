@@ -14,8 +14,10 @@ public class App {
     }
 
     public void doPlacementPhase() throws IOException {
-        player1.doPlacementPhase();
-        player2.doPlacementPhase();
+        // player1.doPlacementPhase();
+        // player2.doPlacementPhase();
+        player1.checkBeforeDoPlacement();
+        player2.checkBeforeDoPlacement();
     }
 
     public void doAttackingPhase() throws IOException {
@@ -31,15 +33,46 @@ public class App {
         }
     }
 
+    private static String choosePlayType(String name, BufferedReader input, PrintStream out) throws IOException {
+        String prompt = "Player "+ name + ": please choose play type:\n" 
+        + "H human\n"
+        + "C computer\n";
+        while (true) {
+            out.print(prompt);
+            String s = input.readLine();
+            s = s.toUpperCase();
+            if (s.equals("H") || s.equals("C")) {
+                return s;
+            } else {
+                out.println("Invalid input!");
+                continue;
+            }
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         Board<Character> b1 = new BattleShipBoard<Character>(10, 20,'X');
         Board<Character> b2 = new BattleShipBoard<Character>(10, 20,'X');
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         // V1ShipFactory factory = new V1ShipFactory();
         V2ShipFactory factory = new V2ShipFactory();
-        TextPlayer p1 = new TextPlayer("A", b1, input, System.out, factory);
-        TextPlayer p2 = new TextPlayer("B", b2, input, System.out, factory);
+        // TextPlayer p1 = new TextPlayer("A", b1, input, System.out, factory);
+        // TextPlayer p2 = new TextPlayer("B", b2, input, System.out, factory);
        
+
+        String s1 = choosePlayType("A", input, System.out);
+        String s2 = choosePlayType("B", input, System.out);
+        TextPlayer p1, p2;
+        if (s1.equals("H")) {
+            p1 = new TextPlayer("A", b1, input, System.out, factory, true);
+        } else {
+            p1 = new TextPlayer("A", b1, input, System.out, factory, false);
+        }
+        if (s2. equals("H")) {
+            p2 = new TextPlayer("B", b2, input, System.out, factory, true);
+        } else {
+            p2 = new TextPlayer("B", b2, input, System.out, factory, false);
+        }
         App app = new App(p1, p2);
         app.doPlacementPhase();
         app.doAttackingPhase();

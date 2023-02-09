@@ -3,6 +3,8 @@ package edu.duke.ss1316.battleship;
 public class Placement {
     private final Coordinate where;
     private final char orientation;
+
+    // private final boolean rectangle;
     public Placement(Coordinate c, char o) {
         checkOrientation(o);
         this.where = c;

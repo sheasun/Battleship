@@ -20,9 +20,6 @@ public class NonRectangleShip<T> extends BasicShip<T> {
     public NonRectangleShip(String name, Placement p, int width, int height, T data, T onHit) {
         this(name, p, width, height, new SimpleShipDisplayInfo<T>(data, onHit), new SimpleShipDisplayInfo<T>(null, data));
       }
-      public NonRectangleShip(Placement p, T data, T onHit) {
-        this("testship", p, 1, 1, data, onHit);
-      }
 
     static HashSet<Coordinate> makeCoords(String name, Placement p, int width, int height) {
         if (name == "Battleship") {
@@ -58,26 +55,6 @@ public class NonRectangleShip<T> extends BasicShip<T> {
             set.add(new Coordinate(row + 1, col + 1));
             set.add(new Coordinate(row, col + 1));
         }
-        // if (orientation == 'U' || orientation == 'L') {
-        //     set.add(new Coordinate(row, col + 1));
-        //     set.add(new Coordinate(row + 1, col + 1));
-        //     set.add(new Coordinate(row + 1, col));
-        //     if (orientation == 'U') {
-        //         set.add(new Coordinate(row + 1, col + 2));
-        //     } else {
-        //         set.add(new Coordinate(row + 2, col + 1));
-        //     }
-        // } else {
-        //     set.add(new Coordinate(row, col));
-        //     set.add(new Coordinate(row + 1, col + 1));
-        //     if (orientation == 'D') {
-        //         set.add(new Coordinate(row, col + 1));
-        //         set.add(new Coordinate(row, col + 2));
-        //     } else {
-        //         set.add(new Coordinate(row + 1, col));
-        //         set.add(new Coordinate(row + 2, col));
-        //     }
-        // }
         return set;
     }
 
@@ -119,31 +96,6 @@ public class NonRectangleShip<T> extends BasicShip<T> {
             set.add(new Coordinate(row, col + 3));
             set.add(new Coordinate(row, col + 4));
         }
-        // if (orientation == 'U' || orientation == 'D') {
-        //     set.add(new Coordinate(row, col));
-        //     set.add(new Coordinate(row + 1, col));
-        //     set.add(new Coordinate(row + 2, col));
-        //     set.add(new Coordinate(row + 2, col + 1));
-        //     set.add(new Coordinate(row + 3, col + 1));
-        //     set.add(new Coordinate(row + 4, col + 1));
-        //     if (orientation == 'U') {
-        //         set.add(new Coordinate(row + 3, col + 1));
-        //     } else {
-        //         set.add(new Coordinate(row + 2, col + 2));
-        //     }
-        // } else {
-        //     set.add(new Coordinate(row + 1, col));
-        //     set.add(new Coordinate(row + 1, col + 1));
-        //     set.add(new Coordinate(row + 1, col + 2));
-        //     set.add(new Coordinate(row, col + 2));
-        //     set.add(new Coordinate(row, col + 3));
-        //     set.add(new Coordinate(row, col + 4));
-        //     if (orientation == 'R') {
-        //         set.add(new Coordinate(row, col + 1));
-        //     } else {
-        //         set.add(new Coordinate(row + 1, col + 3));
-        //     }
-        // }
         return set;
     }
 }

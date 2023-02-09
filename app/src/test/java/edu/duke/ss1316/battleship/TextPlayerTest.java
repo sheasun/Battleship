@@ -15,7 +15,7 @@ class TextPlayerTest {
         PrintStream output = new PrintStream(bytes, true);
         Board<Character> board = new BattleShipBoard<Character>(w, h, 'X');
         V2ShipFactory shipFactory = new V2ShipFactory();
-        return new TextPlayer("A", board, input, output, shipFactory);
+        return new TextPlayer("A", board, input, output, shipFactory, true);
       }
     
     @Test
@@ -88,7 +88,7 @@ class TextPlayerTest {
       PrintStream output = new PrintStream(bytes, true);
       Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
       V2ShipFactory factory = new V2ShipFactory();
-      TextPlayer player =  new TextPlayer("A", board, input, output, factory);
+      TextPlayer player =  new TextPlayer("A", board, input, output, factory, true);
       player.doOnePlacement("Submarine", player.shipCreationFns.get("Submarine"));
       board.fireAt(new Coordinate("b2"));
       assertEquals(false, player.isLost());
@@ -100,7 +100,7 @@ class TextPlayerTest {
     public void test_attackOneCoordinate() throws IOException {
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
       TextPlayer player = createTextPlayer(10, 20, "22\nb2\n", bytes);
-      String prompt = "Please input a coordinate to attack\njava.lang.IllegalArgumentException: Input row format is invalid!\n";
+      String prompt = "Player " + player.getName() + ": where would you want to attack\njava.lang.IllegalArgumentException: Input row format is invalid!\n";
       Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
       player.attackOneCoordinate(board);
       assertEquals(prompt, bytes.toString());
@@ -110,7 +110,7 @@ class TextPlayerTest {
     public void test_checkIfCoordinateInBound() throws IOException {
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
       TextPlayer player = createTextPlayer(10, 20, "z2\nb2\n", bytes);
-      String prompt = "Please input a coordinate to attack\nPlease input a coordinate in bound!\n";
+      String prompt = "Player " + player.getName() + ": where would you want to attack\nPlease input a coordinate in bound!\n";
       Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
       player.attackOneCoordinate(board);
       assertEquals(prompt, bytes.toString());
