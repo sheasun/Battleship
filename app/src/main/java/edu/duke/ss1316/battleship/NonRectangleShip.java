@@ -5,23 +5,20 @@ import java.util.LinkedHashSet;
 
 public class NonRectangleShip<T> extends BasicShip<T> {
     private final String name;
-    // private final char orientation;
+
     public String getName() {
         return this.name;
     }
-    // public char getOrientation() {
-    //     return this.orientation;
-    // }
-    public NonRectangleShip(String name, Placement p, int width, int height, ShipDisplayInfo<T> myInfo, ShipDisplayInfo<T> enemyInfo){
+
+    public NonRectangleShip(String name, NonRectanglePlacement p, int width, int height, ShipDisplayInfo<T> myInfo, ShipDisplayInfo<T> enemyInfo){
         super(makeCoords(name, p, width, height), myInfo, enemyInfo);
         this.name = name;
-        // this.orientation = p.getOrientation();
       }
-    public NonRectangleShip(String name, Placement p, int width, int height, T data, T onHit) {
+    public NonRectangleShip(String name, NonRectanglePlacement p, int width, int height, T data, T onHit) {
         this(name, p, width, height, new SimpleShipDisplayInfo<T>(data, onHit), new SimpleShipDisplayInfo<T>(null, data));
       }
 
-    static HashSet<Coordinate> makeCoords(String name, Placement p, int width, int height) {
+    static HashSet<Coordinate> makeCoords(String name, NonRectanglePlacement p, int width, int height) {
         if (name == "Battleship") {
             return makeBattleshipCoords(name, p, width, height);
         } else {
@@ -29,7 +26,7 @@ public class NonRectangleShip<T> extends BasicShip<T> {
         }
       }
 
-    static LinkedHashSet<Coordinate> makeBattleshipCoords(String name, Placement p, int width, int height) {
+    static LinkedHashSet<Coordinate> makeBattleshipCoords(String name, NonRectanglePlacement p, int width, int height) {
         LinkedHashSet<Coordinate> set = new LinkedHashSet<Coordinate>();
         char o = p.getOrientation();
         int row = p.getWhere().getRow();
@@ -58,7 +55,7 @@ public class NonRectangleShip<T> extends BasicShip<T> {
         return set;
     }
 
-    static LinkedHashSet<Coordinate> makeCarrierCoords(String name, Placement p, int width, int height) {
+    static LinkedHashSet<Coordinate> makeCarrierCoords(String name, NonRectanglePlacement p, int width, int height) {
         LinkedHashSet<Coordinate> set = new LinkedHashSet<Coordinate>();
         char o = p.getOrientation();
         int row = p.getWhere().getRow();

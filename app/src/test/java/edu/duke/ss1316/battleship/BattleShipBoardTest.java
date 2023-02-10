@@ -31,20 +31,20 @@ public class BattleShipBoardTest {
     String s1 = "The coordinate is taken by other ship!";
     // NoCollisionRuleChecker
     String s2 = "Out of bounds!";
-    Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(0, 8), 'h'));
+    Ship<Character> ship1 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, 8), 'h'));
     assertEquals(null, b.tryAddShip(ship1));
 
-    Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(0, 9), 'h'));
+    Ship<Character> ship2 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, 9), 'h'));
     assertEquals(s2, b.tryAddShip(ship2));
     b.tryAddShip(ship1);
     assertEquals(s1, b.tryAddShip(ship1));
 
-    Ship<Character> ship3 = factory.makeSubmarine(new Placement(new Coordinate(18, 0), 'v'));
+    Ship<Character> ship3 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(18, 0), 'v'));
     assertEquals(null, b.tryAddShip(ship3));
     b.tryAddShip(ship3);
     assertEquals(s1, b.tryAddShip(ship3));
 
-    Ship<Character> ship4 = factory.makeSubmarine(new Placement(new Coordinate(19, 0), 'v'));
+    Ship<Character> ship4 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(19, 0), 'v'));
     assertEquals(s2, b.tryAddShip(ship4));
   }
 
@@ -52,8 +52,8 @@ public class BattleShipBoardTest {
   public void test_whatIsAt() {
     Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
     V2ShipFactory factory = new V2ShipFactory();
-    Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
-    Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(0, 0), 'v'));
+    Ship<Character> ship1 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(2, 3), 'h'));
+    Ship<Character> ship2 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, 0), 'v'));
     board.tryAddShip(ship1);
     board.tryAddShip(ship2);
     board.fireAt(new Coordinate(3, 3));
@@ -64,8 +64,8 @@ public class BattleShipBoardTest {
   public void test_fireAt() {
     Board<Character> board = new BattleShipBoard<Character>(10, 20, new InBoundRuleChecker<>(new NoCollisionRuleChecker<>(null)), 'X');
     V2ShipFactory factory = new V2ShipFactory();
-    Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
-    Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(0, 0), 'v'));
+    Ship<Character> ship1 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(2, 3), 'h'));
+    Ship<Character> ship2 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, 0), 'v'));
     assertSame(null, board.fireAt(new Coordinate(2, 3)));
     board.tryAddShip(ship1);
     assertSame(ship1, board.fireAt(new Coordinate(2, 3)));
@@ -79,7 +79,7 @@ public class BattleShipBoardTest {
   public void test_findShipsBySonar() {
     Board<Character> board = new BattleShipBoard<Character>(10, 20, new InBoundRuleChecker<>(new NoCollisionRuleChecker<>(null)), 'X');
     V2ShipFactory factory = new V2ShipFactory();
-    Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(0, 0), 'h'));
+    Ship<Character> ship1 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, 0), 'h'));
     HashMap<String, Integer> map = new HashMap<>();
     map.put("Submarine", 0);
     map.put("Destroyer", 0);

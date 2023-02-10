@@ -16,7 +16,7 @@ class NonRectangleShipTest {
     @Test
     public void test_battleship(){
         Coordinate c = new Coordinate(2, 3);
-        Placement p = new Placement(c,'u');
+        NonRectanglePlacement p = new NonRectanglePlacement(c,'u');
         ShipDisplayInfo<Character> myDisplay = new SimpleShipDisplayInfo<>('s', '*');
         ShipDisplayInfo<Character> enemyDisplay = new SimpleShipDisplayInfo<>(null, 's');
         NonRectangleShip<Character> ship = new NonRectangleShip("Battleship", p, 3, 2, myDisplay, enemyDisplay);
@@ -40,7 +40,7 @@ class NonRectangleShipTest {
     @Test
     public void test_carrier(){
         Coordinate c = new Coordinate(2, 3);
-        Placement p = new Placement(c,'u');
+        NonRectanglePlacement p = new NonRectanglePlacement(c,'u');
         ShipDisplayInfo<Character> myDisplay = new SimpleShipDisplayInfo<>('s', '*');
         ShipDisplayInfo<Character> enemyDisplay = new SimpleShipDisplayInfo<>(null, 's');
         NonRectangleShip<Character> ship = new NonRectangleShip("Carrier", p, 2, 5, myDisplay, enemyDisplay);
@@ -69,7 +69,7 @@ class NonRectangleShipTest {
     @Test
     public void test_left_carrier() {
         Coordinate c = new Coordinate(2, 3);
-        Placement p = new Placement(c,'l');
+        NonRectanglePlacement p = new NonRectanglePlacement(c,'l');
         ShipDisplayInfo<Character> myDisplay = new SimpleShipDisplayInfo<>('s', '*');
         ShipDisplayInfo<Character> enemyDisplay = new SimpleShipDisplayInfo<>(null, 's');
         NonRectangleShip<Character> ship = new NonRectangleShip("Carrier", p, 2, 5, myDisplay, enemyDisplay);

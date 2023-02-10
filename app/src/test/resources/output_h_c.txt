@@ -259,7 +259,7 @@ at M4 and going to the right.  You have
 2 "Carriers" that are 1x6
 ---------------------------------------------------------------------------
 Player A where do you want to place a Battleship?
-Invalid orientation!
+java.lang.IllegalArgumentException: Please input correct orientation
 Player A where do you want to place a Battleship?
   0|1|2|3|4|5|6|7|8|9
 A s|s|s|s|d|d|d|d|d|d A
@@ -528,7 +528,7 @@ Player A, what would you like to do?
 ---------------------------------------------------------------------------
 Player A which ship do you want to move (input any coordiate of the ship)
 Please input the new placement
----------------------------------------------------------------------------
+java.lang.IllegalArgumentException: Please input correct orientation---------------------------------------------------------------------------
 Possible actions for Player A
 
 F Fire at a square

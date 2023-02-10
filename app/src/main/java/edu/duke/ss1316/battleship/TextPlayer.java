@@ -25,7 +25,7 @@ public class TextPlayer {
     private final ArrayList<Placement> computerShips;
 
     private int move, scan;
-    private Random random;
+    // private Random random;
 
     private int computerHitRow, computerHitCol;
 
@@ -57,12 +57,17 @@ public class TextPlayer {
         return this.view;
     }
 
-    public Placement readPlacement(String prompt) throws IOException {
+    public Placement readPlacement(String prompt, String shipName) throws IOException {
         while (true) {
             out.print(prompt);
             String s = inputReader.readLine();
             try {
-                Placement p = new Placement(s);
+                Placement p;
+                if (shipName.equals("Submarine") ||shipName.equals("Destroyer")) {
+                    p = new RectanglePlacement(s);
+                } else {
+                    p = new NonRectanglePlacement(s);
+                }
                 return p;
             }
             catch (IllegalArgumentException e) {
@@ -71,34 +76,9 @@ public class TextPlayer {
         }
     }
 
-    /* 
-     * check if the orientation is correctly related to ship type
-     */
-    public boolean checkOrientation(String shipName, Placement p) {
-        char o = p.getOrientation();
-        if (shipName.equals("Submarine") || shipName.equals("Destroyer")) {
-            if (o == 'H' || o == 'V') {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            if (o == 'U' || o == 'D' || o == 'R' || o == 'L') {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
       public void doOnePlacement(String shipName, Function<Placement, Ship<Character>> createFn) throws IOException {
         while (true) {
-            Placement p = readPlacement("Player " + name + " where do you want to place a " + shipName + "?\n");
-            // may need some changes
-            if (!checkOrientation(shipName, p)) {
-                out.print("Invalid orientation!\n");
-                continue;
-            }
+            Placement p = readPlacement("Player " + name + " where do you want to place a " + shipName + "?\n", shipName);
             Ship<Character> s = createFn.apply(p);
             String ans = theBoard.tryAddShip(s);
             if (ans == null) {
@@ -215,12 +195,17 @@ public class TextPlayer {
      * if it is valid, return the placement
      * else return null
      */
-    public Placement readNewPlacement() throws IOException {
+    public Placement readNewPlacement(String shipName) throws IOException {
         String prompt = "Please input the new placement\n";
         out.print(prompt);
         String s = inputReader.readLine();
         try{
-            Placement p = new Placement(s);
+            Placement p;
+            if (shipName.equals("Submarine") || shipName.equals("Destroyer")) {
+                p = new RectanglePlacement(s);
+            } else {
+                p = new NonRectanglePlacement(s);
+            }
             return p;
           }
           catch(IllegalArgumentException e){
@@ -259,11 +244,8 @@ public class TextPlayer {
         if (ship == null) {
             return false;
         }
-        Placement newPlacement = readNewPlacement();
+        Placement newPlacement = readNewPlacement(ship.getName());
         if (newPlacement == null) {
-            return false;
-        }
-        if(!checkOrientation(ship.getName(), newPlacement)) {
             return false;
         }
         return moveToNewPlacement(ship, newPlacement);
@@ -417,30 +399,29 @@ public class TextPlayer {
      * actions taken by the computer
      */
     public void actionByComputer(BoardTextView enemyView) throws IOException {
-        // actionWhenDoPlacement();
         actionWhenDoAttacking(enemyView);
     }
     public void createComputerShips() {
         // #1
-        computerShips.add(new Placement("a0h"));
+        computerShips.add(new RectanglePlacement("a0h"));
         // #2
-        computerShips.add(new Placement("a2h"));
+        computerShips.add(new RectanglePlacement("a2h"));
         // #3
-        computerShips.add(new Placement("a4h"));
+        computerShips.add(new RectanglePlacement("a4h"));
         // #4
-        computerShips.add(new Placement("a7h"));
+        computerShips.add(new RectanglePlacement("a7h"));
         // #5
-        computerShips.add(new Placement("b0h"));
+        computerShips.add(new RectanglePlacement("b0h"));
         // #6
-        computerShips.add(new Placement("b3d"));
+        computerShips.add(new NonRectanglePlacement("b3d"));
         // #7
-        computerShips.add(new Placement("b5l"));
+        computerShips.add(new NonRectanglePlacement("b5l"));
         // #8
-        computerShips.add(new Placement("b7r"));
+        computerShips.add(new NonRectanglePlacement("b7r"));
         // #9
-        computerShips.add(new Placement("c0u"));
+        computerShips.add(new NonRectanglePlacement("c0u"));
         // #10
-        computerShips.add(new Placement("c2d"));
+        computerShips.add(new NonRectanglePlacement("c2d"));
     }
 
     /* 
@@ -462,9 +443,6 @@ public class TextPlayer {
      */
     public void actionWhenDoAttacking(BoardTextView enemyView) throws IOException {
         Board<Character> enemyBoard = enemyView.getBoard();
-        // random = new Random(22);
-        // int row = random.nextInt(0, enemyBoard.getHeight());
-        // int col = random.nextInt(0, enemyBoard.getWidth());
         if (this.computerHitCol == enemyBoard.getWidth()) {
             this.computerHitCol = 0;
             this.computerHitRow = (this.computerHitRow + 1) % enemyBoard.getHeight();

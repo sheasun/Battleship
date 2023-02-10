@@ -11,13 +11,13 @@ class NoCollisionRuleCheckerTest {
         InBoundRuleChecker<Character> rc = new InBoundRuleChecker<Character>(new NoCollisionRuleChecker<>(null));
         String s1 = "The coordinate is taken by other ship!";
         String s2 = "Out of bounds!";
-        Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(0, 0), 'h'));
+        Ship<Character> ship1 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, 0), 'h'));
         assertEquals(null, rc.checkPlacement(ship1, b));
         b.tryAddShip(ship1);
         assertEquals(s1, rc.checkPlacement(ship1, b));
-        Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
+        Ship<Character> ship2 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(2, 3), 'h'));
         assertEquals(null, rc.checkPlacement(ship2, b));
-        Ship<Character> ship3 = factory.makeSubmarine(new Placement(new Coordinate(19, 0), 'v'));
+        Ship<Character> ship3 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(19, 0), 'v'));
         assertEquals(s2, rc.checkPlacement(ship3, b));
     }
 }

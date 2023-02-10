@@ -12,15 +12,15 @@ class InBoundRuleCheckerTest {
         InBoundRuleChecker<Character> rc = new InBoundRuleChecker<Character>(null);
         String s = "Out of bounds!";
 
-        Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(0, 0), 'h'));
-        Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(0, 9), 'h'));
+        Ship<Character> ship1 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, 0), 'h'));
+        Ship<Character> ship2 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, 9), 'h'));
 
-        Ship<Character> ship3 = factory.makeSubmarine(new Placement(new Coordinate(18, 0), 'v'));
-        Ship<Character> ship4 = factory.makeSubmarine(new Placement(new Coordinate(19, 0), 'v'));
+        Ship<Character> ship3 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(18, 0), 'v'));
+        Ship<Character> ship4 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(19, 0), 'v'));
 
-        Ship<Character> ship5 = factory.makeSubmarine(new Placement(new Coordinate(-1, 0), 'h'));
-        Ship<Character> ship6 = factory.makeSubmarine(new Placement(new Coordinate(0, -1), 'h'));
-        Ship<Character> ship7 = factory.makeSubmarine(new Placement(new Coordinate(0, -1), 'v'));
+        Ship<Character> ship5 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(-1, 0), 'h'));
+        Ship<Character> ship6 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, -1), 'h'));
+        Ship<Character> ship7 = factory.makeSubmarine(new RectanglePlacement(new Coordinate(0, -1), 'v'));
         
         assertEquals(null, rc.checkPlacement(ship1, b));
         assertEquals(s, rc.checkPlacement(ship2, b));

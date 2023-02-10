@@ -1,0 +1,134 @@
+Player A: please choose play type:
+H human
+C computer
+Player B: please choose play type:
+H human
+C computer
+Player A hit your submarine at (0, 0)!
+Player B hit your submarine at (0, 0)!
+Player A hit your submarine at (0, 1)!
+Player B hit your submarine at (0, 1)!
+Player A hit your submarine at (0, 2)!
+Player B hit your submarine at (0, 2)!
+Player A hit your submarine at (0, 3)!
+Player B hit your submarine at (0, 3)!
+Player A hit your destroyer at (0, 4)!
+Player B hit your destroyer at (0, 4)!
+Player A hit your destroyer at (0, 5)!
+Player B hit your destroyer at (0, 5)!
+Player A hit your destroyer at (0, 6)!
+Player B hit your destroyer at (0, 6)!
+Player A hit your destroyer at (0, 7)!
+Player B hit your destroyer at (0, 7)!
+Player A hit your destroyer at (0, 8)!
+Player B hit your destroyer at (0, 8)!
+Player A hit your destroyer at (0, 9)!
+Player B hit your destroyer at (0, 9)!
+Player A hit your destroyer at (1, 0)!
+Player B hit your destroyer at (1, 0)!
+Player A hit your destroyer at (1, 1)!
+Player B hit your destroyer at (1, 1)!
+Player A hit your destroyer at (1, 2)!
+Player B hit your destroyer at (1, 2)!
+Player A hit your battleship at (1, 3)!
+Player B hit your battleship at (1, 3)!
+Player A hit your battleship at (1, 4)!
+Player B hit your battleship at (1, 4)!
+Player A hit your battleship at (1, 5)!
+Player B hit your battleship at (1, 5)!
+Player A hit your battleship at (1, 6)!
+Player B hit your battleship at (1, 6)!
+Player A hit your battleship at (1, 7)!
+Player B hit your battleship at (1, 7)!
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hit your carrier at (2, 0)!
+Player B hit your carrier at (2, 0)!
+Player A missed
+Player B missed
+Player A hit your carrier at (2, 2)!
+Player B hit your carrier at (2, 2)!
+Player A missed
+Player B missed
+Player A hit your battleship at (2, 4)!
+Player B hit your battleship at (2, 4)!
+Player A hit your battleship at (2, 5)!
+Player B hit your battleship at (2, 5)!
+Player A hit your battleship at (2, 6)!
+Player B hit your battleship at (2, 6)!
+Player A hit your battleship at (2, 7)!
+Player B hit your battleship at (2, 7)!
+Player A hit your battleship at (2, 8)!
+Player B hit your battleship at (2, 8)!
+Player A missed
+Player B missed
+Player A hit your carrier at (3, 0)!
+Player B hit your carrier at (3, 0)!
+Player A missed
+Player B missed
+Player A hit your carrier at (3, 2)!
+Player B hit your carrier at (3, 2)!
+Player A hit your carrier at (3, 3)!
+Player B hit your carrier at (3, 3)!
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hit your battleship at (3, 6)!
+Player B hit your battleship at (3, 6)!
+Player A hit your battleship at (3, 7)!
+Player B hit your battleship at (3, 7)!
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hit your carrier at (4, 0)!
+Player B hit your carrier at (4, 0)!
+Player A hit your carrier at (4, 1)!
+Player B hit your carrier at (4, 1)!
+Player A hit your carrier at (4, 2)!
+Player B hit your carrier at (4, 2)!
+Player A hit your carrier at (4, 3)!
+Player B hit your carrier at (4, 3)!
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hit your carrier at (5, 0)!
+Player B hit your carrier at (5, 0)!
+Player A hit your carrier at (5, 1)!
+Player B hit your carrier at (5, 1)!
+Player A missed
+Player B missed
+Player A hit your carrier at (5, 3)!
+Player B hit your carrier at (5, 3)!
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A missed
+Player B missed
+Player A hit your carrier at (6, 1)!
+Player B hit your carrier at (6, 1)!
+Player A missed
+Player B missed
+Player A hit your carrier at (6, 3)!
+Player A is WINNER!

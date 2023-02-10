@@ -1,6 +1,6 @@
 package edu.duke.ss1316.battleship;
 
-import java.util.HashSet;
+// import java.util.HashSet;
 import java.util.LinkedHashSet;
 
 public class RectangleShip<T> extends BasicShip<T> {

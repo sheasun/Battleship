@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 public class PlacementTest {
     @Test
     public void test_equals() {
-        Placement p1 = new Placement("b2v");
-        Placement p2 = new Placement(new Coordinate(1, 2), 'v');
-        Placement p3 = new Placement("b2V");
-        Placement p4 = new Placement("b2h");
-        Placement p5 = new Placement("b3H");
+        Placement p1 = new RectanglePlacement("b2v");
+        Placement p2 = new RectanglePlacement(new Coordinate(1, 2), 'v');
+        Placement p3 = new RectanglePlacement("b2V");
+        Placement p4 = new RectanglePlacement("b2h");
+        Placement p5 = new RectanglePlacement("b3H");
     
         assertEquals(p1, p1);
         assertEquals(p1, p2);
@@ -28,17 +28,19 @@ public class PlacementTest {
 
     @Test
     public void test_invalid_input() {
-        assertThrows(IllegalArgumentException.class, () -> new Placement("B2J"));
-        assertThrows(IllegalArgumentException.class, () -> new Placement("B2hh"));
+        assertThrows(IllegalArgumentException.class, () -> new RectanglePlacement("B2J"));
+        assertThrows(IllegalArgumentException.class, () -> new RectanglePlacement("B2hh"));
+        assertThrows(IllegalArgumentException.class, () -> new NonRectanglePlacement("B2h"));
+        assertThrows(IllegalArgumentException.class, () -> new NonRectanglePlacement("B2hh"));
     }
 
     @Test
     public void test_hashCode(){
-      Placement p1 = new Placement("B2H");
-      Placement p2 = new Placement("B2h");
-      Placement p3 = new Placement("b2H");
-      Placement p4 = new Placement("b2h");
-      Placement p5 = new Placement("b2v");
+      Placement p1 = new RectanglePlacement("B2H");
+      Placement p2 = new RectanglePlacement("B2h");
+      Placement p3 = new RectanglePlacement("b2H");
+      Placement p4 = new RectanglePlacement("b2h");
+      Placement p5 = new RectanglePlacement("b2v");
   
       assertEquals(p1.hashCode(), p1.hashCode());
       assertEquals(p1.hashCode(), p2.hashCode());
@@ -55,10 +57,10 @@ public class PlacementTest {
   
     @Test
     public void test_toString(){
-      Placement p1 = new Placement("c1v");
-      Placement p2 = new Placement("c1V");
-      Placement p3 = new Placement("d1h");
-      Placement p4 = new Placement("f2H");
+      Placement p1 = new RectanglePlacement("c1v");
+      Placement p2 = new RectanglePlacement("c1V");
+      Placement p3 = new RectanglePlacement("d1h");
+      Placement p4 = new RectanglePlacement("f2H");
   
       assertEquals("((2, 1), V)", p1.toString());
       assertEquals("((2, 1), V)", p2.toString());

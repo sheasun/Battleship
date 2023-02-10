@@ -21,19 +21,29 @@ public class V2ShipFactory implements AbstractShipFactory<Character> {
   
       @Override
       public Ship<Character> makeBattleship(Placement where) {
-        return createShip(where, 3, 2, 'b', "Battleship");
+        return createOtherShip(new NonRectanglePlacement(where.getWhere(), where.getOrientation()), 3, 2, 'b', "Battleship");
       }
   
       @Override
       public Ship<Character> makeCarrier(Placement where) {
-        return createShip(where, 2, 5, 'c', "Carrier");
+        return createOtherShip(new NonRectanglePlacement(where.getWhere(), where.getOrientation()), 2, 5, 'c', "Carrier");
       }
 
       protected Ship<Character> createShip(Placement where, int w, int h, char letter, String name) {
-        if (name.equals("Submarine") || name.equals("Destroyer")) {
-          return new RectangleShip<Character>(name, where.getWhere(), w, h, letter, '*');
-        } else {
-            return new NonRectangleShip<Character>(name, where, w, h, letter, '*');
-        }
+        return new RectangleShip<Character>(name, where.getWhere(), w, h, letter, '*');
+        // if (name.equals("Submarine") || name.equals("Destroyer")) {
+        //   return new RectangleShip<Character>(name, where.getWhere(), w, h, letter, '*');
+        // } else {
+        //     return new NonRectangleShip<Character>(name, where, w, h, letter, '*');
+        // }
+      }
+
+      protected Ship<Character> createOtherShip(NonRectanglePlacement where, int w, int h, char letter, String name) {
+        return new NonRectangleShip<Character>(name, where, w, h, letter, '*');
+        // if (name.equals("Submarine") || name.equals("Destroyer")) {
+        //   return new RectangleShip<Character>(name, where.getWhere(), w, h, letter, '*');
+        // } else {
+        //     return new NonRectangleShip<Character>(name, where, w, h, letter, '*');
+        // }
       }
 }
