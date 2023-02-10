@@ -27,6 +27,8 @@ public class TextPlayer {
     private int move, scan;
     private Random random;
 
+    private int computerHitRow, computerHitCol;
+
     public TextPlayer(String name, Board<Character> theBoard, 
     BufferedReader inputSource, PrintStream out, AbstractShipFactory<Character> factory, boolean human) {
         this.name = name;
@@ -43,6 +45,8 @@ public class TextPlayer {
         this.scan = 3;
         this.human = human;
         computerShips = new ArrayList<>();
+        this.computerHitRow = 0;
+        this.computerHitCol = 0;
     }
 
     public String getName() {
@@ -67,9 +71,34 @@ public class TextPlayer {
         }
     }
 
+    /* 
+     * check if the orientation is correctly related to ship type
+     */
+    public boolean checkOrientation(String shipName, Placement p) {
+        char o = p.getOrientation();
+        if (shipName.equals("Submarine") || shipName.equals("Destroyer")) {
+            if (o == 'H' || o == 'V') {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (o == 'U' || o == 'D' || o == 'R' || o == 'L') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
       public void doOnePlacement(String shipName, Function<Placement, Ship<Character>> createFn) throws IOException {
         while (true) {
             Placement p = readPlacement("Player " + name + " where do you want to place a " + shipName + "?\n");
+            // may need some changes
+            if (!checkOrientation(shipName, p)) {
+                out.print("Invalid orientation!\n");
+                continue;
+            }
             Ship<Character> s = createFn.apply(p);
             String ans = theBoard.tryAddShip(s);
             if (ans == null) {
@@ -122,16 +151,6 @@ public class TextPlayer {
         }
         return true;
     }
-    public boolean checkIfCoordinateInBound(Coordinate c) {
-        int row = c.getRow();
-        int col = c.getColumn();
-        int height = theBoard.getHeight();
-        int width = theBoard.getWidth();
-        if (row >= 0 && row < height && col >= 0 && col < width) {
-            return true;
-        }
-        return false;
-    }
 
     public Coordinate attackOneCoordinate(Board<Character> enemyBoard) throws IOException {
         String prompt = "Player " + this.name + ": where would you want to attack\n";
@@ -140,7 +159,8 @@ public class TextPlayer {
             String s = inputReader.readLine();
             try {
                 Coordinate c = new Coordinate(s);
-                if (checkIfCoordinateInBound(c)) {
+
+                if (theBoard.checkIfInBound(c.getRow(), c.getColumn())) {
                     return c;
                 } else {
                     out.println("Please input a coordinate in bound!");
@@ -176,7 +196,7 @@ public class TextPlayer {
             String s = inputReader.readLine();
             try {
                 Coordinate c = new Coordinate(s);
-                if (checkIfCoordinateInBound(c)) {
+                if (theBoard.checkIfInBound(c.getRow(), c.getColumn())) {
                     Ship<Character> ship = theBoard.getShip(c);
                     return ship;
                 } else {
@@ -212,7 +232,6 @@ public class TextPlayer {
     public boolean moveToNewPlacement(Ship<Character> ship, Placement p) throws IOException {
         this.theBoard.removeShip(ship);
         String shipName = ship.getName();
-        String o;
         Ship<Character> newShip = this.shipCreationFns.get(shipName).apply(p);
         LinkedHashMap<Coordinate, Boolean> map = ship.getMyPieces();
         newShip.updatePieces(map);
@@ -244,6 +263,9 @@ public class TextPlayer {
         if (newPlacement == null) {
             return false;
         }
+        if(!checkOrientation(ship.getName(), newPlacement)) {
+            return false;
+        }
         return moveToNewPlacement(ship, newPlacement);
     }
 
@@ -256,7 +278,7 @@ public class TextPlayer {
         String s = inputReader.readLine();
         try {
             Coordinate c = new Coordinate(s);
-            if (checkIfCoordinateInBound(c)) {
+            if (theBoard.checkIfInBound(c.getRow(), c.getColumn())) {
                 return c;
             } else {
                 return null;
@@ -351,7 +373,6 @@ public class TextPlayer {
             out.print(this.view.displayMyBoardWithEnemyNextToIt(enemyView, myHeader, enemyHeader));
             chooseFromOptions(enemyView);
             out.print(this.view.displayMyBoardWithEnemyNextToIt(enemyView, myHeader, enemyHeader));
-            out.print("---------------------------------------------------------------------------\n");
         } else {
             actionByComputer(enemyView);
         }
@@ -409,18 +430,23 @@ public class TextPlayer {
         // #4
         computerShips.add(new Placement("a7h"));
         // #5
-        computerShips.add(new Placement("b0v"));
+        computerShips.add(new Placement("b0h"));
         // #6
-        computerShips.add(new Placement("b1u"));
+        computerShips.add(new Placement("b3d"));
         // #7
-        computerShips.add(new Placement("b4d"));
+        computerShips.add(new Placement("b5l"));
         // #8
-        computerShips.add(new Placement("b8l"));
+        computerShips.add(new Placement("b7r"));
         // #9
-        computerShips.add(new Placement("e2u"));
+        computerShips.add(new Placement("c0u"));
         // #10
-        computerShips.add(new Placement("e5r"));
+        computerShips.add(new Placement("c2d"));
     }
+
+    /* 
+     * computer player
+     * do placement phase
+     */
     public void actionWhenDoPlacement() throws IOException {
         createComputerShips();
         for(int i = 0; i < this.shipsToPlace.size(); ++i){
@@ -436,14 +462,24 @@ public class TextPlayer {
      */
     public void actionWhenDoAttacking(BoardTextView enemyView) throws IOException {
         Board<Character> enemyBoard = enemyView.getBoard();
-        random = new Random();
-        int row = random.nextInt(0, enemyBoard.getHeight());
-        int col = random.nextInt(0, enemyBoard.getWidth());
-        Coordinate coor = new Coordinate(row, col);
+        // random = new Random(22);
+        // int row = random.nextInt(0, enemyBoard.getHeight());
+        // int col = random.nextInt(0, enemyBoard.getWidth());
+        if (this.computerHitCol == enemyBoard.getWidth()) {
+            this.computerHitCol = 0;
+            this.computerHitRow = (this.computerHitRow + 1) % enemyBoard.getHeight();
+        }
+        Coordinate coor = new Coordinate(this.computerHitRow, this.computerHitCol);
         enemyBoard.fireAt(coor);
+        ++this.computerHitCol;
         char c = enemyBoard.whatIsAtForEnemy(coor);
         printActionMessage(coor, c);
     }
+
+    /* 
+     * computer player
+     * action message
+     */
     public void printActionMessage(Coordinate coor, char c) {
         String ans = "Player " + this.name + " hit your ";
         boolean hit = true;

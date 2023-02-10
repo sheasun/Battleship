@@ -70,5 +70,7 @@ public interface Ship<T> {
   public LinkedHashMap<Coordinate, Boolean> getMyPieces();
 
   public void updatePieces(LinkedHashMap<Coordinate, Boolean> map);
+
+  public T getType(Coordinate c);
   }
   

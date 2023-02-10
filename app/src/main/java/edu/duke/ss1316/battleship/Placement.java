@@ -5,10 +5,12 @@ public class Placement {
     private final char orientation;
 
     // private final boolean rectangle;
+
     public Placement(Coordinate c, char o) {
-        checkOrientation(o);
-        this.where = c;
-        this.orientation = Character.toUpperCase(o);
+      // this.rectangle = rectangle;
+      this.orientation = Character.toUpperCase(o);
+      this.where = c;
+      checkOrientation();
     }
 
     public Placement(String descr) {
@@ -17,9 +19,10 @@ public class Placement {
       }
       String substr = descr.substring(0, 2);
       char o = Character.toUpperCase(descr.charAt(2));
-      checkOrientation(o);
+      // this.rectangle = rectangle;
       this.where = new Coordinate(substr);
       this.orientation = o;
+      checkOrientation();
     }
 
     public Coordinate getWhere() {
@@ -29,10 +32,11 @@ public class Placement {
         return orientation;
     }
 
-    public void checkOrientation(char o) {
-      if (o == 'h' || o == 'H' || o == 'v' || o == 'V' || 
-      o == 'u' || o == 'U' || o == 'd' || o == 'D' || 
-      o == 'l' || o == 'L' || o == 'r' || o == 'R') {
+    public void checkOrientation() {
+      if (this.orientation == 'H' || this.orientation == 'V' || 
+      this.orientation == 'U' || this.orientation == 'D' 
+      || this.orientation == 'R' || this.orientation == 'L') {
+        return;
       } else {
         throw new IllegalArgumentException("Please input correct orientation");
       }

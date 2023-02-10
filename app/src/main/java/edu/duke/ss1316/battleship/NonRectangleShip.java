@@ -5,17 +5,17 @@ import java.util.LinkedHashSet;
 
 public class NonRectangleShip<T> extends BasicShip<T> {
     private final String name;
-    private final char orientation;
+    // private final char orientation;
     public String getName() {
         return this.name;
     }
-    public char getOrientation() {
-        return this.orientation;
-    }
+    // public char getOrientation() {
+    //     return this.orientation;
+    // }
     public NonRectangleShip(String name, Placement p, int width, int height, ShipDisplayInfo<T> myInfo, ShipDisplayInfo<T> enemyInfo){
         super(makeCoords(name, p, width, height), myInfo, enemyInfo);
         this.name = name;
-        this.orientation = p.getOrientation();
+        // this.orientation = p.getOrientation();
       }
     public NonRectangleShip(String name, Placement p, int width, int height, T data, T onHit) {
         this(name, p, width, height, new SimpleShipDisplayInfo<T>(data, onHit), new SimpleShipDisplayInfo<T>(null, data));

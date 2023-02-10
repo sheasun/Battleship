@@ -63,16 +63,18 @@ public class App {
         String s1 = choosePlayType("A", input, System.out);
         String s2 = choosePlayType("B", input, System.out);
         TextPlayer p1, p2;
-        if (s1.equals("H")) {
-            p1 = new TextPlayer("A", b1, input, System.out, factory, true);
-        } else {
-            p1 = new TextPlayer("A", b1, input, System.out, factory, false);
-        }
-        if (s2. equals("H")) {
-            p2 = new TextPlayer("B", b2, input, System.out, factory, true);
-        } else {
-            p2 = new TextPlayer("B", b2, input, System.out, factory, false);
-        }
+        boolean t1 = s1.equals("H");
+        boolean t2 = s2.equals("H");
+        // if (s1.equals("H")) {
+            p1 = new TextPlayer("A", b1, input, System.out, factory, t1);
+        // } else {
+        //     p1 = new TextPlayer("A", b1, input, System.out, factory, false);
+        // }
+        // if (s2. equals("H")) {
+            p2 = new TextPlayer("B", b2, input, System.out, factory, t2);
+        // } else {
+        //     p2 = new TextPlayer("B", b2, input, System.out, factory, false);
+        // }
         App app = new App(p1, p2);
         app.doPlacementPhase();
         app.doAttackingPhase();

@@ -66,27 +66,45 @@ public class BattleShipBoardTest {
     V2ShipFactory factory = new V2ShipFactory();
     Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
     Ship<Character> ship2 = factory.makeSubmarine(new Placement(new Coordinate(0, 0), 'v'));
+    assertSame(null, board.fireAt(new Coordinate(2, 3)));
     board.tryAddShip(ship1);
-    board.tryAddShip(ship2);
-    assertSame(null, board.fireAt(new Coordinate(1, 3)));
     assertSame(ship1, board.fireAt(new Coordinate(2, 3)));
+    board.tryAddShip(ship2);
+    assertSame(ship2, board.fireAt(new Coordinate(0, 0)));
+    board.removeShip(ship2);
+    assertSame(null, board.fireAt(new Coordinate(0, 0)));
   }
 
   @Test
   public void test_findShipsBySonar() {
     Board<Character> board = new BattleShipBoard<Character>(10, 20, new InBoundRuleChecker<>(new NoCollisionRuleChecker<>(null)), 'X');
     V2ShipFactory factory = new V2ShipFactory();
-    Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(2, 3), 'h'));
+    Ship<Character> ship1 = factory.makeSubmarine(new Placement(new Coordinate(0, 0), 'h'));
     HashMap<String, Integer> map = new HashMap<>();
     map.put("Submarine", 0);
     map.put("Destroyer", 0);
     map.put("Battleship", 0);
     map.put("Carrier", 0);
-    assertEquals(map, board.findShipsBySonar(new Coordinate(2, 3)));
+    
+    assertEquals(map, board.findShipsBySonar(new Coordinate(1, 1)));
+    assertEquals(map, board.findShipsBySonar(new Coordinate(19, 0)));
     map.put("Submarine", 2);
     board.tryAddShip(ship1);
-    assertEquals(map, board.findShipsBySonar(new Coordinate(2, 3)));
-    
+    assertEquals(map, board.findShipsBySonar(new Coordinate(1, 1)));
+    map.put("Submarine", 1);
+    assertEquals(map, board.findShipsBySonar(new Coordinate(1, 3)));
+  }
+
+  @Test
+  public void test_checkIfInBound() {
+    Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
+    assertEquals(false, board.checkIfInBound(20, 0));
+    assertEquals(false, board.checkIfInBound(0, 10));
+    assertEquals(false, board.checkIfInBound(-1, 2));
+    assertEquals(false, board.checkIfInBound(2, -1));
+    assertEquals(true, board.checkIfInBound(5, 5));
+
+
   }
 
 }

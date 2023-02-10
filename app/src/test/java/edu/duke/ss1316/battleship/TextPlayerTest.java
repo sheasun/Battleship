@@ -99,20 +99,37 @@ class TextPlayerTest {
     @Test
     public void test_attackOneCoordinate() throws IOException {
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-      TextPlayer player = createTextPlayer(10, 20, "22\nb2\n", bytes);
+      TextPlayer player = createTextPlayer(10, 20, "22\nu0\nb2\n", bytes);
       String prompt = "Player " + player.getName() + ": where would you want to attack\njava.lang.IllegalArgumentException: Input row format is invalid!\n";
       Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
       player.attackOneCoordinate(board);
       assertEquals(prompt, bytes.toString());
+      bytes.reset();
+      player.attackOneCoordinate(board);
+      String prompt2 = "Player " + player.getName() + ": where would you want to attack\n" + "Please input a coordinate in bound!\n";
+      assertEquals(prompt2, bytes.toString());
     }
 
     @Test
-    public void test_checkIfCoordinateInBound() throws IOException {
+    public void test_readCoordinate() throws IOException {
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-      TextPlayer player = createTextPlayer(10, 20, "z2\nb2\n", bytes);
-      String prompt = "Player " + player.getName() + ": where would you want to attack\nPlease input a coordinate in bound!\n";
-      Board<Character> board = new BattleShipBoard<Character>(10, 20, 'X');
-      player.attackOneCoordinate(board);
+      TextPlayer player = createTextPlayer(10, 20, "z0\nb2\n", bytes);
+      String prompt = "Player " + player.getName() + " which ship do you want to move (input any coordiate of the ship)\n";
+      prompt += "Please input a coordinate in bound!\n";
+      player.readCoordinate(prompt);
+      
       assertEquals(prompt, bytes.toString());
+    }
+
+    @Test
+    public void test_readSonarCoordinate() throws IOException {
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      TextPlayer player = createTextPlayer(10, 20, "z0\nb2\n", bytes);
+      String prompt = "Player " + player.getName() + ": please input the coordinate of the sonar scan\n";
+      prompt += "Please input a coordinate in bound!\n";
+      player.readSonarCoordinate(prompt);
+      
+      assertEquals(prompt, bytes.toString());
+
     }
 }

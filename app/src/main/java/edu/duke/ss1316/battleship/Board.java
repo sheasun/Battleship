@@ -23,4 +23,6 @@ public interface Board<T> {
   public void removeShip(Ship<Character> ship);
 
   public HashMap<String, Integer> findShipsBySonar(Coordinate c);
+
+  public boolean checkIfInBound(int x, int y);
 }

@@ -92,4 +92,8 @@ public abstract class BasicShip<T> implements Ship<T> {
           entry2.setValue(entry1.getValue());
         }
     }
+
+    public T getType(Coordinate c) {
+        return this.myDisplayInfo.getInfo(c, false);
+    }
 }

@@ -14,6 +14,7 @@ public class BattleShipBoard<T> implements Board<T> {
 
     private final PlacementRuleChecker<T> placementChecker;
     HashSet<Coordinate> enemyMisses;
+    HashMap<Coordinate, T> enemyHits;
     final T missInfo;
 
     public int getWidth() {
@@ -36,6 +37,7 @@ public class BattleShipBoard<T> implements Board<T> {
         this.myShips = new ArrayList<>();
         this.placementChecker = placementChecker;
         this.enemyMisses = new HashSet<>();
+        this.enemyHits = new HashMap<>();
         this.missInfo = missInfo;
     }
 
@@ -56,29 +58,52 @@ public class BattleShipBoard<T> implements Board<T> {
     }
 
     protected T whatIsAt(Coordinate where, boolean isSelf) {
-        for (Ship<T> s: myShips) {
-          if (s.occupiesCoordinates(where)){
-            return s.getDisplayInfoAt(where, isSelf);
+        // for (Ship<T> s: myShips) {
+        //   if (s.occupiesCoordinates(where)){
+        //     return s.getDisplayInfoAt(where, isSelf);
+        //   }
+        // }
+        // if (!isSelf && enemyMisses.contains(where)) {
+        //   return missInfo;
+        // }
+        if (isSelf) {
+          for (Ship<T> s: myShips) {
+            if (s.occupiesCoordinates(where)){
+              return s.getDisplayInfoAt(where, isSelf);
+            }
+          }
+        } else {
+          if (enemyMisses.contains(where)) {
+            return missInfo;
+          } else if (enemyHits.containsKey(where)) {
+            return enemyHits.get(where);
+          } else {
+            return null;
           }
         }
-        if (!isSelf && enemyMisses.contains(where)) {
-          return missInfo;
-        }
-      return null;
+        return null;
     }
     
       public T whatIsAtForEnemy(Coordinate where) {
         return whatIsAt(where, false);
       }
 
+      //
     public Ship<T> fireAt(Coordinate c) {
       for (Ship<T> s : this.myShips) {
         if (s.occupiesCoordinates(c)) {
           s.recordHitAt(c);
+          if (enemyMisses.contains(c)) {
+            enemyMisses.remove(c);
+          }
+          enemyHits.put(c, s.getType(c));
           return s;
         }
       }
-      this.enemyMisses.add(c);
+      enemyMisses.add(c);
+      if (enemyHits.containsKey(c)) {
+        enemyHits.remove(c);
+      }
       return null;
     }
 
@@ -99,13 +124,17 @@ public class BattleShipBoard<T> implements Board<T> {
       this.myShips.remove(ship);
     }
 
-    private boolean checkIfInBound(int x, int y) {
+    public boolean checkIfInBound(int x, int y) {
       if (x >= 0 && x < this.height && y >= 0 && y < this.width) {
         return true;
       } else {
         return false;
       }
     }
+
+    /* 
+     * return hashmap of all coordinates that occupied by a ship
+     */
     public HashMap<String, Integer> findShipsBySonar(Coordinate coor) {
       HashMap<String, Integer> map = new HashMap<>();
       map.put("Submarine", 0);
@@ -114,18 +143,13 @@ public class BattleShipBoard<T> implements Board<T> {
       map.put("Carrier", 0);
       int row = coor.getRow();
       int col = coor.getColumn();
-      // Ship<T> ship = getShip(new Coordinate(r, c));
-      // if (ship != null) {
-      //   String name = ship.getName();
-      //   map.put(name, map.get(name) + 1);
-      // }
-      int startRow = row - 3;
-      int startCol = col - 3;
-      for (int r = startRow; r <= startRow + 3; ++r) {
-        int num = 2 * (r - startRow) + 1;
-        int c = startCol + 3 - (r - startRow);
-        while (num > 0) {
-          // must check it, else it would throw argument
+
+      int len = 4;
+      int scope = 7;
+      for(int i = 0; i < len; ++i) {
+        for(int j = 0; j < 2 * i + 1; ++j){
+          int r = row + i - (len - 1);
+          int c = col + j - i;
           if (checkIfInBound(r, c)) {
             Ship<T> ship = getShip(new Coordinate(r, c));
             if (ship != null) {
@@ -133,22 +157,19 @@ public class BattleShipBoard<T> implements Board<T> {
               map.put(name, map.get(name) + 1);
             }
           }
-          --num;
-          ++c;
         }
       }
-      for (int r = row + 3; r >= row + 1; r--) {
-        int num = 2 * (3 - (r - row)) + 1;
-        int c = startCol + r - row;
-        while (num > 0) {
+
+      for(int i = len; i < scope; ++i) {
+        for(int j = 0; j < (scope - 1 - i) * 2 + 1; ++j) {
+          int r = row + i - (len - 1);
+          int c = j + col + i + 1 - scope;
           if (checkIfInBound(r, c)) {
             Ship<T> ship = getShip(new Coordinate(r, c));
             if (ship != null) {
               String name = ship.getName();
               map.put(name, map.get(name) + 1);
-          }
-          --num;
-          ++c;
+            }
         }
       }
     }
